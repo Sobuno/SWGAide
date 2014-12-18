@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
+<jardesc>
+    <jar path="SWGAide-EMU/SWGAide3.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/SWGAide-EMU/SWGAide.jardesc" exportErrors="false" exportWarnings="true" includeDirectoryEntries="true" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="false" mainClassHandleIdentifier="=SWGAide-EMU/&lt;swg{SWGAide.java[SWGAide" manifestLocation="/SWGAide-EMU/MANIFEST.MF" manifestVersion="1.0" reuseManifest="true" saveManifest="true" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.crafting.schematics"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.gui.common"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.swgcraft"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.crafting.resources.types"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.model.mail"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.docs"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.crafting.resources"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.crafting"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.gui.images"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.model.images"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.gui"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.gui.schematics"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.gui.docs"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.gui.common.images"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.gui.tree"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.model"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.gui.resources"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.gui.mail"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.gui.trade"/>
+        <javaElement handleIdentifier="=SWGAide-EMU/&lt;swg.tools"/>
+    </selectedElements>
+</jardesc>
