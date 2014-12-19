@@ -511,7 +511,7 @@ public final class SWGMailMessage
         this.messageFrom = this.messageFrom.intern();
         this.messageSubject = this.messageSubject.intern();
 
-        if (this.id <= 0) {
+        if (this.id == 0) {
             this.id = Long.parseLong(messageID);
             messageID = null;
         }
