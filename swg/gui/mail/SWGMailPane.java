@@ -1813,12 +1813,12 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
 
         @Override
         public Class<?> getColumnClass(int columnIndex) {
-            return 
+            return columnIndex == 2 ? Date.class : String.class;
 
             // columnIndex == 2
             // ? Date.class
             // :
-                        String.class;
+                        //String.class;
         }
 
         @Override
@@ -1845,7 +1845,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             case 1:
                 return getFromString(msg.fromLine());
             case 2:
-                return getDateString(msg.date());
+                return msg.date()*1000;
             case 3:
                 return msg.getName();
             case 4:
