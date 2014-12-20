@@ -10,6 +10,7 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.net.URL;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -506,5 +507,14 @@ public final class SWGGuiUtils {
             TableColumn col = tcm.getColumn(c);
             tableColumnSetWidth(col, width, width, max);
         }
+    }
+    
+    public static String stripColorCodes(String input) {
+        /**
+         * Regular expression that matches color-tags
+         */
+        Pattern colorRegexp = Pattern.compile("\\\\(#[a-zA-z0-9]{6})");
+        
+        return colorRegexp.matcher(input).replaceAll("");
     }
 }

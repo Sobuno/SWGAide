@@ -65,7 +65,7 @@ public class SWGConstants {
     /**
      * The version number of the SWGAide that is available for download.
      */
-    public static final String version = "0.9.8-Sobuno-0.0.1";
+    public static final String version = "0.9.8-Sobuno-0.0.3";
     
     /**
      * Indicates whether we are operating in NGE mode or pre-CU mode

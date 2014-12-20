@@ -88,7 +88,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
      * Regular expression used to split from lines
      */
     private static Pattern regexp = Pattern.compile("[SWG]*\\.([\\w\\-]*)\\.(.+)");
-
+    
     /**
      * The GUI list of mail folders
      */
@@ -1053,6 +1053,9 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
                 "mailCopyToSWGAide", Boolean.TRUE)).booleanValue();
         boolean d = ((Boolean) SWGFrame.getPrefsKeeper().get(
                 "mailDeleteAfterCopy", Boolean.FALSE)).booleanValue();
+        
+        boolean stripColor = ((Boolean) SWGFrame.getPrefsKeeper().get(
+                "mailStripColor", Boolean.FALSE)).booleanValue();
 
         final JCheckBoxMenuItem del = new JCheckBoxMenuItem("Delete copied", d);
         del.setToolTipText("Delete mails in SWG after successful copy");
@@ -1084,9 +1087,23 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
                 del.setEnabled(v);
             }
         });
+        
+        final JCheckBoxMenuItem strip = new JCheckBoxMenuItem("Strip color codes", stripColor);
+        strip.setToolTipText("Strip color codes from mails");
+        strip.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean v = strip.isSelected();
+                SWGFrame.getPrefsKeeper().add(
+                        "mailStripColor", Boolean.valueOf(v));
+                mailModel.fireTableDataChanged();
+                
+            }
+        });
 
         opts.add(copy);
         opts.add(del);
+        opts.add(strip);
 
         return opts;
     }
@@ -1397,9 +1414,17 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             mailHeader.from.setText(getFromString(msg.fromLine()));
             mailHeader.date.setText(getDateString(msg.date()));
             mailHeader.filename.setText(msg.getName());
-            mailHeader.subject.setText(msg.subject());
+            
+            boolean stripColor = ((Boolean) SWGFrame.getPrefsKeeper().get(
+                    "mailStripColor", Boolean.FALSE)).booleanValue();
+            if(stripColor) {
+                mailHeader.subject.setText(SWGGuiUtils.stripColorCodes(msg.subject()));
+                mailBody.setText(SWGGuiUtils.stripColorCodes(msg.bodyText()));
+            } else {
+                mailHeader.subject.setText(msg.subject());
+                mailBody.setText(msg.bodyText());
+            }
 
-            mailBody.setText(msg.bodyText());
             mailBody.setCaretPosition(0);
         } else {
             mailHeader.from.setText("");
@@ -1844,6 +1869,11 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             SWGMailMessage msg = messages.get(row);
             switch (column) {
             case 0:
+                boolean stripColor = ((Boolean) SWGFrame.getPrefsKeeper().get(
+                        "mailStripColor", Boolean.FALSE)).booleanValue();
+                if(stripColor) {
+                    return SWGGuiUtils.stripColorCodes(msg.subject());
+                }
                 return msg.subject();
             case 1:
                 return getFromString(msg.fromLine());
