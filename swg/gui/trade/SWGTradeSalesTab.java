@@ -195,7 +195,7 @@ class SWGTradeSalesTab extends JPanel implements TableColumnModelListener {
                 lowPrice = highPrice = r;
             } // else parse error
         } // else free price
-
+        
         List<SWGAuctionerData> salesMails = tradeTab.getSalesMails();
         List<SWGAuctionerData> tmp = new ArrayList<SWGAuctionerData>(
                 salesMails.size());
