@@ -36,7 +36,7 @@ here, for context reasons.
 
 
 
-Files names
+File names
 ===========
 
 File names must always be lower case.
