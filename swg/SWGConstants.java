@@ -55,7 +55,12 @@ public class SWGConstants {
      * The URL to the SWGAide home and download page.
      */
     public static final String swgAideURL = 
-        "http://sites.google.com/site/simongronlund/";
+        "http://sobuno.github.io/SWGAide/";
+    
+    /**
+     * The URL to the GitHub repository
+     */
+    public static final String gitHubURL = "https://github.com/Sobuno/SWGAide/";
 
     /**
      * The text file containing version information.
@@ -65,7 +70,7 @@ public class SWGConstants {
     /**
      * The version number of the SWGAide that is available for download.
      */
-    public static final String version = "0.9.8-Sobuno-0.0.3";
+    public static final String version = "0.9.8-Sobuno-0.0.4";
     
     /**
      * Indicates whether we are operating in NGE mode or pre-CU mode
