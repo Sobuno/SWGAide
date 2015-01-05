@@ -2,6 +2,7 @@ package swg.gui.resources;
 
 import java.io.Serializable;
 
+import swg.SWGConstants;
 import swg.model.SWGCharacter;
 
 /**
@@ -112,11 +113,11 @@ final class SWGHarvesterOwner implements Serializable,
             throw new IllegalArgumentException("Illegal value: " + phony);
 
         this.name = phony;
-        setStorageEfficiency(0);
-        setMaintEfficiency(0);
-        setEnergyEfficiency(0);
-        setHarvestingTechnology(0);
-        setHarvestFair(0);
+        setStorageEfficiency(storage);
+        setMaintEfficiency(maint);
+        setEnergyEfficiency(energy);
+        setHarvestingTechnology(tech);
+        setHarvestFair(fair);
     }
 
     /**
@@ -160,7 +161,12 @@ final class SWGHarvesterOwner implements Serializable,
      * @return the energyEfficiencyLevel
      */
     int getEnergyEfficiency() {
-    	return 0;
+        if(SWGConstants.nge) {
+            if (character != null)
+                return energyEfficiencyLevel; // XXX
+            return energyEfficiencyLevel;
+        }
+        return 0;
     }
 
     /**
@@ -170,6 +176,9 @@ final class SWGHarvesterOwner implements Serializable,
      * @return the harvestFair
      */
     int getHarvestFair() {
+        if(SWGConstants.nge) {
+            return harvestFair;
+        }
     	return 0;
     }
 
@@ -180,6 +189,11 @@ final class SWGHarvesterOwner implements Serializable,
      * @return the harvestingTechnologyLevel
      */
     int getHarvestingTechnology() {
+        if(SWGConstants.nge) {
+            if (character != null)
+                return harvestingTechnologyLevel; // XXX
+            return harvestingTechnologyLevel;
+        }
     	return 0;
     }
 
@@ -190,6 +204,11 @@ final class SWGHarvesterOwner implements Serializable,
      * @return the maintenanceEfficiencyLevel
      */
     int getMaintEfficiency() {
+        if(SWGConstants.nge) {
+            if (character != null)
+                return maintenanceEfficiencyLevel; // XXX
+            return maintenanceEfficiencyLevel;
+        }
     	return 0;
     }
 
@@ -212,6 +231,11 @@ final class SWGHarvesterOwner implements Serializable,
      * @return the storageEfficiencyLevel
      */
     int getStorageEfficiency() {
+        if(SWGConstants.nge) {
+            if (character != null)
+                return storageEfficiencyLevel; // XXX
+            return storageEfficiencyLevel;
+        }
         return 0;
     }
 
