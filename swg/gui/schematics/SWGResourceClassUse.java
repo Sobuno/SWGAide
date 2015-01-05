@@ -651,7 +651,7 @@ final class SWGResourceClassUse extends JPanel {
      */
     private Component makeCenterList() {
         resClassListModel = new ResClassListModel();
-        resClassList = new JList(resClassListModel);
+        resClassList = new JList<SWGResourceClass>(resClassListModel);
         resClassList.setBorder(BorderFactory.createEmptyBorder(5, 10, 0, 0));
         
         resClassList.setCellRenderer(new SWGListCellRenderer(

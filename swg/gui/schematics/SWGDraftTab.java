@@ -2615,7 +2615,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         /**
          * A list of existing assignees.
          */
-        private final JList assigneeList;
+        private final JList<String> assigneeList;
 
         /**
          * A temporary list of assignees; this list is used by the OK-button
@@ -2653,7 +2653,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
 
             label = new JLabel("", SwingConstants.CENTER);
 
-            assigneeList = new JList();
+            assigneeList = new JList<String>();
             assigneeList.setVisibleRowCount(4);
             assigneeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             JScrollPane jsp = new JScrollPane(assigneeList);
