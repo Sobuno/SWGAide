@@ -16,9 +16,10 @@ import javax.swing.plaf.basic.ComboPopup;
 /**
  * Extends the {@link JComboBox} with a wider popup list than the maximum
  * width allows for. Tips found at http://sdnshare.sun.com/view.jsp?id=2295.
+ * @param <T> The type encapsulated in the popup list
  */
 @SuppressWarnings("serial")
-public class JComboWiderPopup extends JComboBox {
+public class JComboWiderPopup<T> extends JComboBox<T> {
 
     /**
      * Creates a {@link JComboBox} with a wider popup list that usual
@@ -68,7 +69,7 @@ public class JComboWiderPopup extends JComboBox {
          * @param comboBox
          *            the combo box for the popup
          */
-        public WiderPopup(JComboBox comboBox) {
+        public WiderPopup(JComboBox<T> comboBox) {
             super(comboBox);
             setLayout(new GridLayout(comboBox.getModel().getSize(), 1, 5, 5));
         }

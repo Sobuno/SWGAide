@@ -59,7 +59,7 @@ public class SWGCraftOptionsPanel extends JDialog {
     /**
      * A GUI list of galaxies from which to select one main galaxy.
      */
-    private JComboBox galaxyList;
+    private JComboBox<String> galaxyList;
     
 
     /**
@@ -107,7 +107,7 @@ public class SWGCraftOptionsPanel extends JDialog {
     /**
      * The GUI component from which to select the user's time zone.
      */
-    private JComboBox timeZones;
+    private JComboBox<String> timeZones;
 
     /**
      * A GUI text field for the user name used to connect to SWGCraft.org.
@@ -458,7 +458,7 @@ public class SWGCraftOptionsPanel extends JDialog {
         glxPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         glxPanel.setBorder(BorderFactory.createTitledBorder("Main galaxy"));
 
-        galaxyList = new JComboBox(new Vector<String>(SWGCGalaxy.namesActive()));
+        galaxyList = new JComboBox<String>(new Vector<String>(SWGCGalaxy.namesActive()));
         galaxyList.setToolTipText(
                 "Your main galaxy for which to download resources");
         galaxyList.addActionListener(new ActionListener() {
@@ -629,7 +629,7 @@ public class SWGCraftOptionsPanel extends JDialog {
         timeP.setBorder(BorderFactory.createTitledBorder("Time zone"));
 
         Vector<String> vec = getTimeZones();
-        timeZones = new JComboBox(vec);
+        timeZones = new JComboBox<String>(vec);
         timeZones.setToolTipText("Select your time zone");
         timeZones.addActionListener(new ActionListener() {
 

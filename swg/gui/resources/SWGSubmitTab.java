@@ -228,7 +228,7 @@ final class SWGSubmitTab extends JPanel {
     /**
      * The list to filter for resource classes written to the notes file.
      */
-    private JComboBox resourceClassFilter;
+    private JComboBox<String> resourceClassFilter;
 
     /**
      * The GUI component which contains this object, the parent of this

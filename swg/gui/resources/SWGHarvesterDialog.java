@@ -83,7 +83,7 @@ final class SWGHarvesterDialog extends SWGJDialog implements ActionListener {
     /**
      * The GUI drop down list for the harvester type.
      */
-    private JComboBox type;
+    private JComboBox<String> type;
 
     /**
      * Creates an instance of this dialog.

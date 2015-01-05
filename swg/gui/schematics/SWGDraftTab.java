@@ -322,7 +322,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     /**
      * The GUI element for displaying used-in list and find results.
      */
-    private JList usedinAndFind;
+    private JList<SWGSchematic> usedinAndFind;
 
     /**
      * The list model for the used-in and find-result GUI component.
@@ -1989,7 +1989,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 BorderFactory.createEmptyBorder(6, 2, 2, 2)));
 
         usedinAndFindModel = new UsedInModel();
-        usedinAndFind = new JList(usedinAndFindModel);
+        usedinAndFind = new JList<SWGSchematic>(usedinAndFindModel);
         usedinAndFind.setLayoutOrientation(JList.VERTICAL);
 
         usedinAndFind.setCellRenderer(new ListCellRenderer() {
@@ -2042,8 +2042,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             public void valueChanged(ListSelectionEvent e) {
                 int i = usedinAndFind.getSelectedIndex();
                 if (!e.getValueIsAdjusting() && i >= 0)
-                    actionSchematicSelected((SWGSchematic)
-                            usedinAndFindModel.getElementAt(i),
+                    actionSchematicSelected(usedinAndFindModel.getElementAt(i),
                             traceForward, false);
             }
         });
@@ -2644,7 +2643,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         /**
          * The model for the list of assignees.
          */
-        private final DefaultListModel model;
+        private final DefaultListModel<String> model;
 
         /**
          * Creates a modal instance of this type.
@@ -2658,7 +2657,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             assigneeList.setVisibleRowCount(4);
             assigneeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             JScrollPane jsp = new JScrollPane(assigneeList);
-            model = new DefaultListModel();
+            model = new DefaultListModel<String>();
             assigneeList.setModel(model);
 
             defineAssignee = new JTextField();
@@ -3126,7 +3125,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
      *         Chimaera.Zimoon
      */
-    final class UsedInModel extends AbstractListModel {
+    final class UsedInModel extends AbstractListModel<SWGSchematic> {
 
         /**
          * The list of schematics for this model.
@@ -3151,7 +3150,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         }
 
         @Override
-        public Object getElementAt(int index) {
+        public SWGSchematic getElementAt(int index) {
             if (elements != null)
                 return elements[index];
 

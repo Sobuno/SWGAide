@@ -82,7 +82,7 @@ public final class SWGAlbumTab extends JPanel {
     /**
      * A list of the albums SWG and TC, or just SWG.
      */
-    private JList albums;
+    private JList<SWGImageSubAlbum> albums;
 
     /**
      * The current album, SWG or TC. This value is selected by the user.
@@ -171,7 +171,7 @@ public final class SWGAlbumTab extends JPanel {
      */
     private void actionAlbumSelect(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
-            SWGImageSubAlbum s = (SWGImageSubAlbum) albums.getSelectedValue();
+            SWGImageSubAlbum s = albums.getSelectedValue();
             if (s == null) return;
 
             currentAlbum = s;
@@ -617,7 +617,7 @@ public final class SWGAlbumTab extends JPanel {
         SWGListModel mm = new SWGListModel();
         mm.setElements(makeSouthAlbumChooserList());
 
-        albums = new JList(mm);
+        albums = new JList<SWGImageSubAlbum>(mm);
         albums.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         albums.addListSelectionListener(new ListSelectionListener() {
             @SuppressWarnings("synthetic-access")

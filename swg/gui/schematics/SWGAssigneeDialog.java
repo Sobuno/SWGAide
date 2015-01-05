@@ -82,22 +82,22 @@ final class SWGAssigneeDialog extends SWGJDialog {
     /**
      * A list for schematic assignees.
      */
-    private JList assigneeList;
+    private JList<SWGSchematicAssignee> assigneeList;
 
     /**
      * A list of favorite schematics for a selected assignee.
      */
-    private JList favoriteList;
+    private JList<SWGSchematic> favoriteList;
 
     /**
      * A combo box for selecting a profession.
      */
-    private JComboBox professionChooser;
+    private JComboBox<SWGProfession> professionChooser;
 
     /**
      * A list for all schematics or a filtered set.
      */
-    private JList schematicsList;
+    private JList<SWGSchematic> schematicsList;
 
     /**
      * Creates an instance of this type.
@@ -120,8 +120,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
     private void actionAssignee(MouseEvent e) {
         JPopupMenu popup = new JPopupMenu();
 
-        final SWGSchematicAssignee as = (SWGSchematicAssignee)
-                assigneeList.getSelectedValue();
+        final SWGSchematicAssignee as = assigneeList.getSelectedValue();
 
         JMenuItem del = new JMenuItem("Delete assignee...");
         del.setToolTipText("Delete the selected assignee");
@@ -216,7 +215,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
             int i = favoriteList.locationToIndex(e.getPoint());
             if (i < 0) return;
 
-            remSfromA((SWGSchematic) favoriteList.getModel().getElementAt(i));
+            remSfromA(favoriteList.getModel().getElementAt(i));
         }
     }
 
@@ -233,7 +232,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
             int idx = schematicsList.locationToIndex(e.getPoint());
             if (idx < 0) return;
 
-            addStoA((SWGSchematic) schematicsList.getModel().getElementAt(idx));
+            addStoA(schematicsList.getModel().getElementAt(idx));
         }
     }
 
@@ -246,8 +245,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
      * @param s a schematic
      */
     private void addStoA(SWGSchematic s) {
-        SWGSchematicAssignee a = (SWGSchematicAssignee)
-                assigneeList.getSelectedValue();
+        SWGSchematicAssignee a = assigneeList.getSelectedValue();
 
         if (s == null || a == null) {
             alertSelectBoth();
@@ -319,7 +317,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
      * @return a GUI element
      */
     private Component makeCenterAssigneeChooser() {
-        assigneeList = new JList(new SWGListModel());
+        assigneeList = new JList<SWGSchematicAssignee>(new SWGListModel());
         assigneeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         assigneeList.setToolTipText("Select the assignee to manage");
 
@@ -335,8 +333,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting())
-                    actionAssigneeSelected((SWGSchematicAssignee)
-                            assigneeList.getSelectedValue());
+                    actionAssigneeSelected(assigneeList.getSelectedValue());
             }
         });
         assigneeList.addMouseListener(new MouseAdapter() {
@@ -398,7 +395,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
             @SuppressWarnings("synthetic-access")
             @Override
             public void actionPerformed(ActionEvent e) {
-                addStoA((SWGSchematic) schematicsList.getSelectedValue());
+                addStoA(schematicsList.getSelectedValue());
             }
         });
 
@@ -412,7 +409,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
             @SuppressWarnings("synthetic-access")
             @Override
             public void actionPerformed(ActionEvent e) {
-                remSfromA((SWGSchematic) favoriteList.getSelectedValue());
+                remSfromA(favoriteList.getSelectedValue());
             }
         });
 
@@ -444,7 +441,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
      */
     private Component makeCenterProfessionChooser() {
         SWGProfession[] pls = SWGProfession.values();
-        professionChooser = new JComboBox(pls) {
+        professionChooser = new JComboBox<SWGProfession>(pls) {
             @Override
             public Dimension getMaximumSize() {
                 Dimension d = super.getMaximumSize();
@@ -490,7 +487,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
      * @return a GUI element
      */
     private Component makeEast() {
-        favoriteList = new JList(new SWGListModel());
+        favoriteList = new JList<SWGSchematic>(new SWGListModel());
         favoriteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         favoriteList.setToolTipText("Select a schematic to remove");
 
@@ -561,7 +558,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
      * @return a GUI element
      */
     private Component makeWest() {
-        schematicsList = new JList(new SWGListModel());
+        schematicsList = new JList<SWGSchematic>(new SWGListModel());
         schematicsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         schematicsList.setToolTipText(
                 "Select a schematic to be added to the selected assignee");
@@ -614,8 +611,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
      * @param s a schematic
      */
     private void remSfromA(SWGSchematic s) {
-        SWGSchematicAssignee a = (SWGSchematicAssignee)
-                assigneeList.getSelectedValue();
+        SWGSchematicAssignee a = assigneeList.getSelectedValue();
 
         if (s == null || a == null) {
             alertSelectBoth();

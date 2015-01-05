@@ -509,6 +509,11 @@ public final class SWGGuiUtils {
         }
     }
     
+    /**
+     * Strips SWG-style color codes (\#FFFFFF) from the given input
+     * @param input String to strip color codes from
+     * @return Cleansed string
+     */
     public static String stripColorCodes(String input) {
         /**
          * Regular expression that matches color-tags

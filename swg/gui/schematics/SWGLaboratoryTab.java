@@ -101,7 +101,7 @@ final class SWGLaboratoryTab extends JPanel {
     /**
      * A combo box at which to select an assignee.
      */
-    private JComboBox assigneeCombo;
+    private JComboBox<SWGSchematicAssignee> assigneeCombo;
 
     /**
      * A menu item used in SWGAide's frame, the Edit menu.
@@ -153,7 +153,7 @@ final class SWGLaboratoryTab extends JPanel {
     /**
      * A list at which to select a schematic.
      */
-    private JList schematicList;
+    private JList<SWGSchematic> schematicList;
 
     /**
      * A flag that denotes if the list of schematics should display HQ, LQ, or
@@ -371,8 +371,7 @@ final class SWGLaboratoryTab extends JPanel {
                     ? kr.rc()
                     : erp.wrapper.rc();
         SWGWeights wgs = erp.wrapper.weights();
-        String nts = ((SWGSchematic)
-                    schematicList.getSelectedValue()).getName();
+        String nts = schematicList.getSelectedValue().getName();
 
         JPopupMenu popup = new JPopupMenu();
 
@@ -975,7 +974,7 @@ final class SWGLaboratoryTab extends JPanel {
      * @return a GUI component
      */
     private Component makeNWAssigneeChooser() {
-        assigneeCombo = new JComboBox(new SWGListModel());
+        assigneeCombo = new JComboBox<SWGSchematicAssignee>(new SWGListModel());
         assigneeCombo.setToolTipText("Select assignee for favorite schematics");
         assigneeCombo.setRenderer(new SWGListCellRenderer() {
 
@@ -1028,7 +1027,7 @@ final class SWGLaboratoryTab extends JPanel {
      * @return a GUI component
      */
     private Component makeNWSchemChooser() {
-        schematicList = new JList(new SWGListModel());
+        schematicList = new JList<SWGSchematic>(new SWGListModel());
         schematicList.setToolTipText("Select a schematic");
         schematicList.setCellRenderer(new SWGListCellRenderer() {
             @Override
@@ -1084,7 +1083,7 @@ final class SWGLaboratoryTab extends JPanel {
      * @param popup a popup dialog
      */
     private void schemSelectAddMenu(JPopupMenu popup) {
-        SWGSchematic s = (SWGSchematic) schematicList.getSelectedValue();
+        SWGSchematic s = schematicList.getSelectedValue();
         popup.add(schemTab.schematicSelectMenu(s, this));
     }
 

@@ -118,7 +118,7 @@ public final class SWGMailISDroidPanel extends JPanel {
     /**
      * The list model for the GUI list for depleted resources.
      */
-    private DefaultListModel depletedListModel;
+    private DefaultListModel<Wrapper> depletedListModel;
 
     /**
      * A list of depleted resources, one element per resource, sorted by
@@ -155,7 +155,7 @@ public final class SWGMailISDroidPanel extends JPanel {
     /**
      * The list model for the GUI list of new resources.
      */
-    private DefaultListModel newListModel;
+    private DefaultListModel<Wrapper> newListModel;
 
     /**
      * A list of resources which are new to the galaxy, one element per
@@ -195,7 +195,7 @@ public final class SWGMailISDroidPanel extends JPanel {
     /**
      * The list model for the GUI list of stat-less resources.
      */
-    private DefaultListModel statlessListModel;
+    private DefaultListModel<Wrapper> statlessListModel;
 
     /**
      * A list of stat-less resources, one element per resource, sorted by
@@ -242,7 +242,7 @@ public final class SWGMailISDroidPanel extends JPanel {
     /**
      * The list model for the GUI list of unreported resources.
      */
-    private DefaultListModel unreportedListModel;
+    private DefaultListModel<Wrapper> unreportedListModel;
 
     /**
      * A list of unreported resources, these are known resources which are not
@@ -859,7 +859,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      * @return a GUI component
      */
     private JPanel makeDepletedList() {
-        depletedListModel = new DefaultListModel();
+        depletedListModel = new DefaultListModel<Wrapper>();
         depletedList = new JList(depletedListModel);
         depletedList.setEnabled(false);
         depletedList.setToolTipText("Depleted resources at this galaxy");
@@ -898,7 +898,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      * @return a GUI component
      */
     private Component makeNewAtGalaxyList() {
-        newListModel = new DefaultListModel();
+        newListModel = new DefaultListModel<Wrapper>();
         newList = new JList(newListModel);
         newList.setEnabled(false);
         newList.setToolTipText("New resources at both planet and galaxy");
@@ -967,7 +967,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      * @return a GUI component
      */
     private Component makeStatlessList() {
-        statlessListModel = new DefaultListModel();
+        statlessListModel = new DefaultListModel<Wrapper>();
         statlessList = new JList(statlessListModel);
         statlessList.setEnabled(false);
         statlessList
@@ -1009,7 +1009,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      * @return a GUI component
      */
     private JPanel makeUnreportedList() {
-        unreportedListModel = new DefaultListModel();
+        unreportedListModel = new DefaultListModel<Wrapper>();
         unreportedList = new JList(unreportedListModel);
         unreportedList.setEnabled(false);
         unreportedList

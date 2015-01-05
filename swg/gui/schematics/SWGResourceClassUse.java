@@ -116,7 +116,7 @@ final class SWGResourceClassUse extends JPanel {
     /**
      * A combo box for the professions to select from.
      */
-    private JComboBox professionBox;
+    private JComboBox<Object> professionBox;
 
     /**
      * A list which displays resource classes which are called for by name by
@@ -127,7 +127,7 @@ final class SWGResourceClassUse extends JPanel {
      * this list only displays the resource classes called for <i>by name</i>,
      * not possible sub-classes.
      */
-    private JList resClassList;
+    private JList<SWGResourceClass> resClassList;
 
     /**
      * A list model for the list of resource classes.
@@ -278,7 +278,7 @@ final class SWGResourceClassUse extends JPanel {
 
             SWGResourceClass rc;
             int row = resClassList.locationToIndex(e.getPoint());
-            rc = (SWGResourceClass) resClassListModel.getElementAt(row);
+            rc = resClassListModel.getElementAt(row);
 
             SWGWeights wgs = guardWeights();
 
@@ -919,7 +919,7 @@ final class SWGResourceClassUse extends JPanel {
         pl.set(0, "<select a profession>");
         pl.add(all); // Have "All" last
 
-        professionBox = new JComboBox(pl.toArray());
+        professionBox = new JComboBox<Object>(pl.toArray());
         professionBox.setToolTipText(
                 "Select a profession updates the resource classes");
 
@@ -1235,7 +1235,7 @@ final class SWGResourceClassUse extends JPanel {
      * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
      *         Chimaera.Zimoon
      */
-    private final class ResClassListModel extends AbstractListModel {
+    private final class ResClassListModel extends AbstractListModel<SWGResourceClass> {
 
         /**
          * A list of resource classes for this model. This list is updated when
@@ -1251,7 +1251,7 @@ final class SWGResourceClassUse extends JPanel {
         }
 
         @Override
-        public Object getElementAt(int index) {
+        public SWGResourceClass getElementAt(int index) {
             return (elems.isEmpty())
                     ? null
                     : elems.get(index);

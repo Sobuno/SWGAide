@@ -3199,8 +3199,10 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
             case 14: { // age
                 return Long.valueOf(res.age());
             }
+            default:
+                return null;
             }
-            return null;
+            
         }
     } // table model
 }

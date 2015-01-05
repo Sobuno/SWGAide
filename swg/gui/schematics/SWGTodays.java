@@ -1602,8 +1602,10 @@ class SWGTodays extends JPanel {
             }
             case 15:
                 return Long.valueOf(triplet.current.age()); // age
+            default:
+                return null;
             }
-            return null;
+            
         }
 
         /**

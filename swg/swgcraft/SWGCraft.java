@@ -152,7 +152,6 @@ public final class SWGCraft {
      * @throws IOException if there is an I/O error
      * @throws NullPointerException if the argument is {@code null}
      */
-    @SuppressWarnings("null")
     static boolean downloadURLToDisk(URL source, File target, boolean isZipped)
             throws ConnectException, IOException {
 
