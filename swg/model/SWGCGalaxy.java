@@ -22,6 +22,15 @@ import swg.swgcraft.SWGCraftCache;
 import swg.swgcraft.SWGCraftCache.CacheUpdate.UpdateType;
 import swg.tools.ZXml;
 
+/**
+ * This class handles the galaxies within SWG which are dynamically loaded from SWGCraft 
+ * (or a local cache) when the class is first loaded.
+ * Compare with {@link SWGGalaxy} which is a wrapper type which contains characters for a
+ * specific {@link SWGStation}. 
+ * 
+ * @author Jesper Madsen
+ *
+ */
 public class SWGCGalaxy implements Serializable {
 
     /**
@@ -311,6 +320,11 @@ public class SWGCGalaxy implements Serializable {
         return defaultGalaxy;
     }
 
+    /**
+     * Returns an array of all servers
+     * 
+     * @return Object array of all servers
+     */
     public static Object[] values() {
         return servers.toArray();
     }
