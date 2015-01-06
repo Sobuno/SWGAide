@@ -71,7 +71,6 @@ public class SWGCGalaxy implements Serializable {
                 }
             }
         } catch (IOException e) {
-            System.out.println("No server file found");
             SWGCraftCache.addSubscriber(new UpdateSubscriber() {
                 public void handleUpdate(UpdateNotification u) {
                     SWGCGalaxy.initializeServers();
