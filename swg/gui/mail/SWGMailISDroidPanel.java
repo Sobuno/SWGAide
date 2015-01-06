@@ -113,7 +113,7 @@ public final class SWGMailISDroidPanel extends JPanel {
     /**
      * A GUI list displaying depleted resources.
      */
-    private JList depletedList;
+    private JList<Wrapper> depletedList;
 
     /**
      * The list model for the GUI list for depleted resources.
@@ -150,7 +150,7 @@ public final class SWGMailISDroidPanel extends JPanel {
     /**
      * A GUI list displaying new resources.
      */
-    private JList newList;
+    private JList<Wrapper> newList;
 
     /**
      * The list model for the GUI list of new resources.
@@ -190,7 +190,7 @@ public final class SWGMailISDroidPanel extends JPanel {
     /**
      * A GUI list displaying stat-less resources.
      */
-    private JList statlessList;
+    private JList<Wrapper> statlessList;
 
     /**
      * The list model for the GUI list of stat-less resources.
@@ -237,7 +237,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      * A GUI list displaying unreported resources, these are known resources
      * which are not reported for one or several planets.
      */
-    private JList unreportedList;
+    private JList<Wrapper> unreportedList;
 
     /**
      * The list model for the GUI list of unreported resources.
@@ -860,7 +860,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      */
     private JPanel makeDepletedList() {
         depletedListModel = new DefaultListModel<Wrapper>();
-        depletedList = new JList(depletedListModel);
+        depletedList = new JList<Wrapper>(depletedListModel);
         depletedList.setEnabled(false);
         depletedList.setToolTipText("Depleted resources at this galaxy");
         depletedList.setCellRenderer(new ListRenderer());
@@ -899,7 +899,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      */
     private Component makeNewAtGalaxyList() {
         newListModel = new DefaultListModel<Wrapper>();
-        newList = new JList(newListModel);
+        newList = new JList<Wrapper>(newListModel);
         newList.setEnabled(false);
         newList.setToolTipText("New resources at both planet and galaxy");
         newList.setCellRenderer(new ListRenderer());
@@ -968,7 +968,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      */
     private Component makeStatlessList() {
         statlessListModel = new DefaultListModel<Wrapper>();
-        statlessList = new JList(statlessListModel);
+        statlessList = new JList<Wrapper>(statlessListModel);
         statlessList.setEnabled(false);
         statlessList
                 .setToolTipText("Resources previously reported without stats");
@@ -1010,7 +1010,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      */
     private JPanel makeUnreportedList() {
         unreportedListModel = new DefaultListModel<Wrapper>();
-        unreportedList = new JList(unreportedListModel);
+        unreportedList = new JList<Wrapper>(unreportedListModel);
         unreportedList.setEnabled(false);
         unreportedList
                 .setToolTipText("Resources known at galaxy but yet not reported at this planet");
@@ -1626,8 +1626,8 @@ public final class SWGMailISDroidPanel extends JPanel {
             return true;
 
         SWGMutableResource res = wrapper.mutable;
-        final DefaultListModel listModel;
-        final JList guiList;
+        final DefaultListModel<Wrapper> listModel;
+        final JList<Wrapper> guiList;
 
         SWGSoapResponse response;
         if (res.id() <= 0 || wrapper.known == null) {
@@ -2438,7 +2438,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      * @throws SOAPExceptionImpl if there is a communication error
      */
     private boolean submitUnreportedOrDepleted(
-            List<Wrapper> wraps, final JList guiList) throws SOAPExceptionImpl {
+            List<Wrapper> wraps, final JList<Wrapper> guiList) throws SOAPExceptionImpl {
 
         // true if this batch pertains to the depleted-list
         boolean isDepl = guiList == depletedList;
@@ -2540,12 +2540,12 @@ public final class SWGMailISDroidPanel extends JPanel {
      * @param listModel the list model to scan
      * @return the index for the specified wrapper in the list model, or -1
      */
-    private int wrapperIndexOf(Wrapper wrapper, DefaultListModel listModel) {
+    private int wrapperIndexOf(Wrapper wrapper, DefaultListModel<Wrapper> listModel) {
         String wn = wrapper.mutable.getName();
         Object o = null;
         int i;
         for (i = 0; i < listModel.size(); ++i) {
-            Wrapper w = (Wrapper) listModel.get(i);
+            Wrapper w = listModel.get(i);
             if (wrapper == w) {
                 o = w; // hit only once, the first time
             } else if (o != null && !wn.equals(w.mutable.getName()))
@@ -2609,7 +2609,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      *         Chimaera.Zimoon
      * @see SWGListCellRenderer
      */
-    private class ListRenderer extends SWGListCellRenderer {
+    private class ListRenderer extends SWGListCellRenderer<Wrapper> {
 
         /**
          * Creates an instance of this type.
@@ -2619,10 +2619,10 @@ public final class SWGMailISDroidPanel extends JPanel {
         }
 
         @Override
-        protected void colorForeground(JList list, Object value, int index,
+        protected void colorForeground(JList<Wrapper> list, Wrapper value, int index,
                 boolean isSelected, boolean cellHasFocus) {
 
-            Wrapper wr = (Wrapper) value;
+            Wrapper wr = value;
             if (wr.isSubmitted)
                 setForeground(Color.LIGHT_GRAY);
             else
@@ -2632,10 +2632,10 @@ public final class SWGMailISDroidPanel extends JPanel {
 
         @SuppressWarnings("synthetic-access")
         @Override
-        protected String labelString(JList list, Object value, int index,
+        protected String labelString(JList<? extends Wrapper> list, Wrapper value, int index,
                 boolean isSelected, boolean cellHasFocus) {
 
-            Wrapper wr = (Wrapper) value;
+            Wrapper wr = value;
 
             ZString z = new ZString();
             z.app(wr.isSubmitted

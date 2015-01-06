@@ -198,7 +198,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
      */
     private void actionAssigneeSelected(SWGSchematicAssignee as) {
         if (as == null) return;
-        ((SWGListModel) favoriteList.getModel()).setElements(as.getFavorites());
+        ((SWGListModel<SWGSchematic>) favoriteList.getModel()).setElements(as.getFavorites());
     }
 
     /**
@@ -317,14 +317,14 @@ final class SWGAssigneeDialog extends SWGJDialog {
      * @return a GUI element
      */
     private Component makeCenterAssigneeChooser() {
-        assigneeList = new JList<SWGSchematicAssignee>(new SWGListModel());
+        assigneeList = new JList<SWGSchematicAssignee>(new SWGListModel<SWGSchematicAssignee>());
         assigneeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         assigneeList.setToolTipText("Select the assignee to manage");
 
-        assigneeList.setCellRenderer(new SWGListCellRenderer() {
+        assigneeList.setCellRenderer(new SWGListCellRenderer<SWGSchematicAssignee>() {
             @Override
-            protected String labelString(Object value) {
-                return ((SWGSchematicAssignee) value).getName();
+            protected String labelString(SWGSchematicAssignee value) {
+                return value.getName();
             }
         });
 
@@ -454,10 +454,10 @@ final class SWGAssigneeDialog extends SWGJDialog {
         professionChooser.setBorder(BorderFactory.createTitledBorder(
                         BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
                         " Profession "));
-        professionChooser.setRenderer(new SWGListCellRenderer() {
+        professionChooser.setRenderer(new SWGListCellRenderer<SWGProfession>() {
             @Override
-            protected String labelString(Object value) {
-                return ((SWGProfession) value).getNameShort();
+            protected String labelString(SWGProfession value) {
+                return value.getNameShort();
             }
         });
 
@@ -471,7 +471,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
                 List<SWGSchematic> sl = SWGSchematicsManager.getSchematics(p);
 
                 Collections.sort(sl);
-                ((SWGListModel) schematicsList.getModel()).setElements(sl);
+                ((SWGListModel<SWGSchematic>) schematicsList.getModel()).setElements(sl);
             }
         });
 
@@ -487,14 +487,14 @@ final class SWGAssigneeDialog extends SWGJDialog {
      * @return a GUI element
      */
     private Component makeEast() {
-        favoriteList = new JList<SWGSchematic>(new SWGListModel());
+        favoriteList = new JList<SWGSchematic>(new SWGListModel<SWGSchematic>());
         favoriteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         favoriteList.setToolTipText("Select a schematic to remove");
 
-        favoriteList.setCellRenderer(new SWGListCellRenderer() {
+        favoriteList.setCellRenderer(new SWGListCellRenderer<SWGSchematic>() {
             @Override
-            protected String labelString(Object value) {
-                return ((SWGSchematic) value).getName();
+            protected String labelString(SWGSchematic value) {
+                return value.getName();
             }
         });
 
@@ -558,15 +558,15 @@ final class SWGAssigneeDialog extends SWGJDialog {
      * @return a GUI element
      */
     private Component makeWest() {
-        schematicsList = new JList<SWGSchematic>(new SWGListModel());
+        schematicsList = new JList<SWGSchematic>(new SWGListModel<SWGSchematic>());
         schematicsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         schematicsList.setToolTipText(
                 "Select a schematic to be added to the selected assignee");
 
-        schematicsList.setCellRenderer(new SWGListCellRenderer() {
+        schematicsList.setCellRenderer(new SWGListCellRenderer<SWGSchematic>() {
             @Override
-            protected String labelString(Object value) {
-                return ((SWGSchematic) value).getName();
+            protected String labelString(SWGSchematic value) {
+                return value.getName();
             }
         });
 
@@ -653,7 +653,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
         Object o = assigneeList.getSelectedValue();
         assigneeList.clearSelection();
         List<SWGSchematicAssignee> as = SWGSchematicTab.assignees();
-        ((SWGListModel) assigneeList.getModel()).setElements(as);
+        ((SWGListModel<SWGSchematicAssignee>) assigneeList.getModel()).setElements(as);
         if (o != null) assigneeList.setSelectedValue(o, true);
     }
 }

@@ -227,7 +227,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             if (folderList.getSelectedIndex() != sel) {
                 folderList.setSelectedIndex(sel);
             }
-            String folder = (String) folderList.getSelectedValue();
+            String folder = folderList.getSelectedValue();
             if (folder == null) return;
 
             boolean nono = toon.mailBox().folder(folder).isDefault();
@@ -426,7 +426,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
      * default folder and it is not empty
      */
     private void folderDelete() {
-        String folder = (String) folderList.getSelectedValue();
+        String folder = folderList.getSelectedValue();
         if (folder == null)
             return;
 
@@ -500,7 +500,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
      * Renames a selected folder
      */
     private void folderRename() {
-        String folder = (String) folderList.getSelectedValue();
+        String folder = folderList.getSelectedValue();
         if (folder == null) return;
 
         if (toon.mailBox().folder(folder).isDefault()) {
@@ -665,8 +665,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
     void mailDelete(boolean confirm) {
         SWGMailBox mb = toon.mailBox();
         SWGMailFolder trash = mb.folder("Trash");
-        SWGMailFolder current = mb.folder((String)
-                folderList.getSelectedValue());
+        SWGMailFolder current = mb.folder(folderList.getSelectedValue());
 
         if (confirm && current.equals(trash)) {
             if (!toon.galaxy().exists()) {
@@ -782,7 +781,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
      */
     private void mailMove() {
         int[] rows = mailList.getSelectedRows();
-        String fn = (String) folderList.getSelectedValue();
+        String fn = folderList.getSelectedValue();
 
         if (rows.length <= 0 || fn == null) return;
 
@@ -843,8 +842,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
         }
 
         int row = mailList.convertRowIndexToModel(mailList.getSelectedRow());
-        SWGMailMessage mail = toon.mailBox().folder((String)
-                folderList.getSelectedValue()).mails().get(row);
+        SWGMailMessage mail = toon.mailBox().folder(folderList.getSelectedValue()).mails().get(row);
 
         if (!mail.exists()) return;
 
@@ -1516,7 +1514,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
      * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
      *         Chimaera.Zimoon
      */
-    private final class SWGFolderList extends JList {
+    private final class SWGFolderList extends JList<String> {
 
         /**
          * Creates a plain list for folder names with a selection listener
@@ -1529,7 +1527,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
                 @SuppressWarnings("synthetic-access")
                 public void valueChanged(ListSelectionEvent e) {
                     if (!e.getValueIsAdjusting()) {
-                        String s = (String) folderList.getSelectedValue();
+                        String s = folderList.getSelectedValue();
                         folderListSelected(s);
                     }
                 }

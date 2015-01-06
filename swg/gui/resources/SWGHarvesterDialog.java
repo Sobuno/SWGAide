@@ -299,7 +299,7 @@ final class SWGHarvesterDialog extends SWGJDialog implements ActionListener {
         JPanel content = new JPanel();
         content.setLayout(new SpringLayout());
 
-        type = new JComboBox(SWGHarvester.TYPES);
+        type = new JComboBox<String>(SWGHarvester.TYPES);
         type.setPreferredSize(new Dimension(180, 26));
         type.setAlignmentX(Component.LEFT_ALIGNMENT);
         type.setAutoscrolls(true);

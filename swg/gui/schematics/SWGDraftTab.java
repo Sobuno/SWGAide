@@ -249,7 +249,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     /**
      * A combo box for selecting schematics sorted in alphabetical order.
      */
-    private JComboBox schemSelector;
+    private JComboBox<String> schemSelector;
 
     /**
      * The tabbed pane that contains this element. This is the component named
@@ -1992,7 +1992,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         usedinAndFind = new JList<SWGSchematic>(usedinAndFindModel);
         usedinAndFind.setLayoutOrientation(JList.VERTICAL);
 
-        usedinAndFind.setCellRenderer(new ListCellRenderer() {
+        usedinAndFind.setCellRenderer(new ListCellRenderer<SWGSchematic>() {
 
             JLabel label = new JLabel();
 
@@ -2004,9 +2004,9 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             @SuppressWarnings("synthetic-access")
             @Override
             public Component getListCellRendererComponent(
-                    JList l, Object val, int i, boolean sel, boolean focus) {
+                    JList<? extends SWGSchematic> l, SWGSchematic val, int i, boolean sel, boolean focus) {
 
-                SWGSchematic schem = (SWGSchematic) val;
+                SWGSchematic schem = val;
 
                 label.setText(schem != null
                         ? schem.getName()
@@ -2165,7 +2165,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 "schemDraftSelectedProfession", SWGProfession.ALL);
 
         List<String> pl = SWGProfession.getNames(false);
-        final JComboBox cb = new JComboBox(pl.toArray());
+        final JComboBox<String> cb = new JComboBox(pl.toArray());
         cb.setToolTipText("Filter by profession");
 
         Dimension d = new Dimension(100, 25);
@@ -2194,8 +2194,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * 
      * @return a GUI component
      */
-    private JComboBox makeWestFSchematicsChooser() {
-        schemSelector = new JComboBox();
+    private JComboBox<String> makeWestFSchematicsChooser() {
+        schemSelector = new JComboBox<String>();
         schemSelectModel = new SchemSelectionModel();
         schemSelector.setModel(schemSelectModel);
         schemSelector.setToolTipText("Select schematic, filters apply");
@@ -2921,7 +2921,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
      *         Chimaera.Zimoon
      */
-    final class SchemSelectionModel extends DefaultComboBoxModel {
+    final class SchemSelectionModel extends DefaultComboBoxModel<String> {
 
         /**
          * A copy of #filteredSchematics.
@@ -2940,7 +2940,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         }
 
         @Override
-        public Object getElementAt(int index) {
+        public String getElementAt(int index) {
             if (schems == null)
                 return null;
             return schems.get(index).getName();

@@ -22,7 +22,7 @@ import javax.swing.plaf.basic.ComboPopup;
 public class JComboWiderPopup<T> extends JComboBox<T> {
 
     /**
-     * Creates a {@link JComboBox} with a wider popup list that usual
+     * Creates a {@link JComboBox} with a wider popup list than usual
      */
     public JComboWiderPopup() {
         // Border not 100% good, inner border should only affect text area
@@ -69,7 +69,7 @@ public class JComboWiderPopup<T> extends JComboBox<T> {
          * @param comboBox
          *            the combo box for the popup
          */
-        public WiderPopup(JComboBox<T> comboBox) {
+        public WiderPopup(JComboBox<?> comboBox) {
             super(comboBox);
             setLayout(new GridLayout(comboBox.getModel().getSize(), 1, 5, 5));
         }

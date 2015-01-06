@@ -614,7 +614,7 @@ public final class SWGAlbumTab extends JPanel {
      * @return a GUI element
      */
     private Component makeSouthAlbumChooser() {
-        SWGListModel mm = new SWGListModel();
+        SWGListModel<SWGImageSubAlbum> mm = new SWGListModel<SWGImageSubAlbum>();
         mm.setElements(makeSouthAlbumChooserList());
 
         albums = new JList<SWGImageSubAlbum>(mm);
