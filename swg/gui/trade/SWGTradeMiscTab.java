@@ -400,7 +400,7 @@ class SWGTradeMiscTab extends JLabel {
 
         @SuppressWarnings("unchecked")
         @Override
-        public Class getColumnClass(int columnIndex) {
+        public Class<?> getColumnClass(int columnIndex) {
             if (columnIndex == 1) return String.class;
             return Integer.class;
         }

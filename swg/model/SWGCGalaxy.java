@@ -79,9 +79,9 @@ public class SWGCGalaxy implements Serializable {
             }, UpdateType.SERVERS);
             SWGCraftCache.updateCache();
         } catch (ParserConfigurationException e) {
-
+        	/* ignore */
         } catch (SAXException e) {
-
+        	/* Malformed XML, nothing we can do about it on our end */
         }
 
     }
