@@ -130,13 +130,18 @@ public final class SWGResourceManager extends SWGResourceMgr {
      * SWGCraft.org was read.
      */
     private static long previousStatusCheck = 0L;
-
+    
     /**
      * The most recent "status time" at SWGCraft.org. This is the time for when
      * the resource export files was updated at SWGCraft.org. The default value
      * is 0.
      */
     private static Long previousStatusTime = Long.valueOf(0);
+    
+    /**
+     * Denotes whether the last attempt at fetching the status time at SWGCraft.org was successful
+     */
+    private static boolean lastSuccessful = true;
 
     /**
      * A list of clients which are subscribing for update notifications. All
@@ -1466,11 +1471,18 @@ public final class SWGResourceManager extends SWGResourceMgr {
                     String statusTime = ZReader.read(url.openStream());
                     previousStatusTime = Long.valueOf(statusTime);
                     previousStatusCheck = current;
+                    lastSuccessful = true;
                 }
                 return previousStatusTime;
             }
         } catch (UnknownHostException e) {
-            SWGCraft.showUnknownHostDialog(url, e);
+            //Making sure the unknown host dialog doesn't keep popping up on every attempt
+            if(lastSuccessful) {
+                SWGCraft.showUnknownHostDialog(url, e);
+                lastSuccessful = false;
+            }
+            previousStatusCheck = current-SWGCraft.STATUS_CHECK_DELAY-90; //Do not check again for (at least) 90 seconds
+            
         } catch (Throwable e) {
             SWGAide.printDebug("cmgr", 1,
                     "SWGResourceManager:statusSWGCraftTime:", e.toString());
