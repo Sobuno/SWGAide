@@ -1534,6 +1534,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
         String gxy = galaxy.getName();
 
         gxy = gxy.toLowerCase(Locale.ENGLISH);
+        gxy = gxy.replace(' ', '_');
         if (gxy.startsWith("test"))
             gxy = "test_center"; // the form used for export files
 
