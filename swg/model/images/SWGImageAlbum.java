@@ -127,21 +127,6 @@ public final class SWGImageAlbum implements Serializable, SWGGui {
         return ret;
     }
 
-    /**
-     * This method transforms this instance to conform to the new album setup,
-     * that it populates itself on demand. Hence this method moves all images to
-     * {@link #defaultList}, if an image does not exist it is ignored. Except
-     * for the default list any previous sub-albums are removed.
-     * <p>
-     * Hence this method executes just the first time a user launches SWGAide
-     * after that these changes are released, in the future an album instance
-     * from the DAT file is empty and this method does nothing.
-     * 
-     * @return {@code this}
-     */
-    private Object readResolve() {
-        return this;
-    }
 
     /**
      * Refresh the album. This implementation scans this screen-shot album for
