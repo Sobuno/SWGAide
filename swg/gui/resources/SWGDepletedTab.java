@@ -48,6 +48,7 @@ import swg.gui.SWGFrame;
 import swg.gui.common.SWGDecoratedTableCellRenderer;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGHelp;
+import swg.gui.common.SWGJTable;
 import swg.gui.common.SWGResourceStatRenderer;
 import swg.gui.common.SWGDecoratedTableCellRenderer.DecoratedTableModel;
 import swg.gui.common.SWGDecoratedTableCellRenderer.TableCellDecorations;
@@ -83,7 +84,6 @@ import swg.tools.ZWriter;
 @SuppressWarnings("serial")
 final class SWGDepletedTab extends JPanel {
 
-    // TODO: Replace JTable with SWGJTable
     
     /**
      * An age comparator to sort the set of depleted resources.
@@ -114,7 +114,7 @@ final class SWGDepletedTab extends JPanel {
     /**
      * The GUI table for depleted resources.
      */
-    private JTable table;
+    private SWGJTable table;
 
     /**
      * Creates an instance of this type.
@@ -533,7 +533,7 @@ final class SWGDepletedTab extends JPanel {
     @SuppressWarnings("synthetic-access")
     private Component makeMainTable() {
         DecoratedTableModel tableModel = new TableModel();
-        table = new JTable(tableModel);
+        table = new SWGJTable(tableModel);
 
         table.setDefaultRenderer(String.class,
                 new SWGResourceStatRenderer(tableModel));
