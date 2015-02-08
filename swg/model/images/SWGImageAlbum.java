@@ -47,12 +47,6 @@ public final class SWGImageAlbum implements Serializable, SWGGui {
     private final SWGImageSubAlbum defaultList;
 
     /**
-     * A list of sub-albums, sub-lists with images. This list is retained for
-     * backward//forward compatibility. TODO: remove sometimes 2011.
-     */
-    private final ArrayList<SWGImageSubAlbum> subAlbums;
-
-    /**
      * The universe in SWG to which this album pertains.
      */
     private final SWGUniverse universe;
@@ -66,9 +60,7 @@ public final class SWGImageAlbum implements Serializable, SWGGui {
     public SWGImageAlbum(SWGUniverse univ) {
         universe = univ;
 
-        subAlbums = new ArrayList<SWGImageSubAlbum>();
         defaultList = new SWGImageSubAlbum(this, univ.getName());
-        subAlbums.add(defaultList);
     }
 
     /**
@@ -148,25 +140,6 @@ public final class SWGImageAlbum implements Serializable, SWGGui {
      * @return {@code this}
      */
     private Object readResolve() {
-        if (subAlbums.size() > 1) {
-            // XXX: remove sometimes 2011
-
-            // sanity, clean the default list
-            for (Iterator<SWGImage> iter = defaultList.iterator(); iter.hasNext();)
-                if (!iter.next().exists())
-                    iter.remove();
-
-            // move all others that exist to default list
-            for (SWGImageSubAlbum isa : subAlbums)
-                if (isa != defaultList)
-                    for (SWGImage i : isa)
-                        if (i.exists() && !defaultList.contains(i))
-                            defaultList.add(i);
-
-            // remove all but the default list
-            subAlbums.clear();
-            subAlbums.add(defaultList);
-        }
         return this;
     }
 
