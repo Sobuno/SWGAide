@@ -69,7 +69,7 @@ Java developers and also non-programmers are warmly welcomed.
 The latter group could gather and submit all kinds of data that could be useful
 in SWGAide and post that at the SWGAide forum at SWGCraft.org. Or anything else
 that is useful for other players, at any format or syntax.
-Developers are welcomed to download the source code from SourceForge.net,
+Developers are welcomed to download the source code from GitHub,
 browse the code but PM me before going ahead to implement stuff.
 
 
@@ -105,6 +105,9 @@ DO NOT post the log file at the forum, it may contain sensitive data.
 
 Windows 7 and Windows Vista
 ===========================
+
+If you use SWGAide.exe instead of SWGAide.jar, following the below instructions is not needed.
+-----------------------------------------------------------------------------
 
 If you are using Windows 7 or Vista you must adjust the preferences so that
 SWGAide can run in "administrator" mode. Notice that this is not an error with
