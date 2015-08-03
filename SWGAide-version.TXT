@@ -1,2 +1,2 @@
-0.9.8-Sobuno-0.0.7
-Wed April 8 23:00:00 CET 2015
+0.9.8-Sobuno-0.0.8
+Mon August 3 22:20:00 CET 2015

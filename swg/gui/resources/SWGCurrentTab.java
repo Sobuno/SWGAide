@@ -2786,7 +2786,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         currentResourcesModel.fireTableDataChanged();
 
         // retain the selection, if possible
-        if (sr != null && sr.galaxy() == SWGFrame.getSelectedGalaxy()) {
+        if (sr != null && sr.galaxy().equals(SWGFrame.getSelectedGalaxy())) {
             selectedResource = sr;
             SWGResourceSet cl = currentGet();
             for (int i = 0; i < cl.size(); ++i) {
