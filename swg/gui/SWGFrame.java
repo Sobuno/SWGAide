@@ -1657,12 +1657,12 @@ public class SWGFrame extends JFrame implements ComponentListener,
                             + "editor automatically. Otherwise it is located "
                             + "in the folder wher you dropped SWGAide, in the "
                             + "\"logs\" folder.\nYou may delete the error log "
-                            + "file once it is sent.\nThanks\nZimoon @ Europe-Chimaera";
+                            + "file once it is sent.\nThanks\nSobuno @ SWGCraft";
                     try {
                         File fd = new File("logs", "SWGAide-ERROR.TXT");
                         URI uri;
                         uri =
-                            new URI("mailto", "simongronlund@gmail.com?"
+                            new URI("mailto", "sobuno@swgcraft.org?"
                             + "SUBJECT=SWGAide Bug Report&BODY=" + l, null);
                         dt.mail(uri);
 
