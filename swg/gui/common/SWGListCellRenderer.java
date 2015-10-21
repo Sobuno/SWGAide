@@ -65,7 +65,6 @@ public class SWGListCellRenderer<T> implements ListCellRenderer<T> {
      * @param isSelected {@code true} if the specified cell is selected
      * @param cellHasFocus {@code true} if the specified cell has the focus
      */
-    @SuppressWarnings("unused")
     protected void colorBackground(JList<? extends T> list, T value, int index,
             boolean isSelected, boolean cellHasFocus) {
 
@@ -86,7 +85,6 @@ public class SWGListCellRenderer<T> implements ListCellRenderer<T> {
      * @param isSelected {@code true} if the specified cell is selected
      * @param cellHasFocus {@code true} if the specified cell has the focus
      */
-    @SuppressWarnings("unused")
     protected void colorForeground(JList<T> list, T value, int index,
             boolean isSelected, boolean cellHasFocus) {
 
@@ -122,7 +120,6 @@ public class SWGListCellRenderer<T> implements ListCellRenderer<T> {
      * @param cellHasFocus {@code true} if the specified cell has the focus
      * @return the string to render
      */
-    @SuppressWarnings("unused")
     protected String labelString(JList<? extends T> list, T value, int index,
             boolean isSelected, boolean cellHasFocus) {
 

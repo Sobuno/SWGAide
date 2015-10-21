@@ -238,7 +238,7 @@ public final class SWGAlbumTab extends JPanel {
      * 
      * @param e the event that triggers this call
      */
-    private void focusGained(@SuppressWarnings("unused") ChangeEvent e) {
+    private void focusGained(ChangeEvent e) {
         if (frame.getTabPane().getSelectedComponent() == this) {
             if (thumbModel == null)
                 make();

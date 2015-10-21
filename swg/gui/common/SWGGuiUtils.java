@@ -161,7 +161,7 @@ public final class SWGGuiUtils {
      * 
      * @param frame the frame for this application
      */
-    public SWGGuiUtils(@SuppressWarnings("unused") SWGFrame frame) {
+    public SWGGuiUtils(SWGFrame frame) {
         Font f = new JLabel().getFont();
         fontBold = new Font(f.getName(), Font.BOLD, f.getSize());
         fontItalic = new Font(f.getName(), Font.ITALIC, f.getSize());

@@ -269,7 +269,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
      * 
      * @param e the event which triggered this action
      */
-    private void actionOwnerSelected(@SuppressWarnings("unused") ItemEvent e) {
+    private void actionOwnerSelected(ItemEvent e) {
         String sel = (String) ownerList.getSelectedItem();
         if (sel == null || isWorking) return;
 

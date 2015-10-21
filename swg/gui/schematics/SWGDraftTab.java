@@ -532,7 +532,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * 
      * @param e the event that triggers the call
      */
-    private void actionNotes(@SuppressWarnings("unused") MouseEvent e) {
+    private void actionNotes(MouseEvent e) {
         if (selectedSchematic != null) {
             SWGSchematicWrapper w = SWGSchemController.
                     wrapperDefault(selectedSchematic);

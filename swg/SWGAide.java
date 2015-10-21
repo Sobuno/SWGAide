@@ -527,7 +527,6 @@ public final class SWGAide {
      * @return {@code false} if there is an error
      * @throws Exception if there is an error
      */
-    @SuppressWarnings("unused")
     public static boolean setLog(File file) throws Exception {
         synchronized (LOCK_LOG) {
             File f = file == null

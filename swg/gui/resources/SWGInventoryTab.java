@@ -270,7 +270,7 @@ final class SWGInventoryTab extends JPanel {
      * 
      * @param e the event which triggered the call
      */
-    private void actionAssigneDelete(@SuppressWarnings("unused") ActionEvent e) {
+    private void actionAssigneDelete(ActionEvent e) {
         if (isWorking)
             return;
 
