@@ -1639,7 +1639,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         final String[] args = {"Create mail", "No, I do it manually"};
         final String msg =
             "An error has occured!\n"
-            + "Let SWGAide open a mail which you can send to Zimoon.\n"
+            + "Let SWGAide open a mail which you can send to Sobuno.\n"
             + "Please attach or inline the error log with the mail";
 
         SwingUtilities.invokeLater(new Runnable() {
