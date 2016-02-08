@@ -577,10 +577,12 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      */
     private void initSchem2cats(SWGSchematic schem, List<SWGCategory> cats) {
         int sc = schem.getCategory();
-        if (sc > 0)
+        if (sc > 0) {
             for (SWGCategory c : cats)
                 if (c.getID() == sc)
                     c.add(schem);
+        }
+ 
     }
 
     /**

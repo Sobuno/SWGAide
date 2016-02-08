@@ -259,7 +259,7 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
         int c = ZXml.intFromAttr(xml, "category");
         category = c > 0
                 ? c
-                : -1;
+                : Integer.MAX_VALUE;
         if (category <= 0)
             SWGAide.printDebug("scmc", 1,
                     "SWGSchematic: missing category: " + name);
