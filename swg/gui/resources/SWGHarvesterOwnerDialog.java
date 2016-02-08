@@ -271,7 +271,8 @@ final class SWGHarvesterOwnerDialog extends SWGJDialog implements ActionListener
      *            a string to return
      * @return the string, or "0" id the argument is {@code null}
      */
-    private String toString(String integer) {
+    @SuppressWarnings("unused")
+	private String toString(String integer) {
         return integer == null
             ? "0"
             : integer;
