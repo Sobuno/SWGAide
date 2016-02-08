@@ -87,7 +87,7 @@ public final class SWGAliasesPane extends JTextArea {
                 KeyEvent.VK_PLUS, InputEvent.CTRL_MASK));
             fontBigger.addActionListener(new ActionListener() {
 
-                @SuppressWarnings( {"hiding", "synthetic-access"})
+                @SuppressWarnings( {"synthetic-access"})
                 public void actionPerformed(ActionEvent e) {
                     changeFont(1.2);
                 }
@@ -99,7 +99,7 @@ public final class SWGAliasesPane extends JTextArea {
                 KeyEvent.VK_MINUS, InputEvent.CTRL_MASK));
             fontLesser.addActionListener(new ActionListener() {
 
-                @SuppressWarnings( {"hiding", "synthetic-access"})
+                @SuppressWarnings( {"synthetic-access"})
                 public void actionPerformed(ActionEvent e) {
                     changeFont(1 / 1.2);
                 }
@@ -111,7 +111,7 @@ public final class SWGAliasesPane extends JTextArea {
                 KeyEvent.VK_0, InputEvent.CTRL_MASK));
             fontNormal.addActionListener(new ActionListener() {
 
-                @SuppressWarnings( {"hiding", "synthetic-access"})
+                @SuppressWarnings( {"synthetic-access"})
                 public void actionPerformed(ActionEvent e) {
                     changeFont(0);
                 }

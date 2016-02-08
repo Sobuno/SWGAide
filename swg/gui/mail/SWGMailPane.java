@@ -274,7 +274,6 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             fontBigger.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PLUS,
                     InputEvent.CTRL_MASK));
             fontBigger.addActionListener(new ActionListener() {
-                @SuppressWarnings("hiding")
                 public void actionPerformed(ActionEvent e) {
                     mailBodyChangeFont(1.2);
                 }
@@ -285,7 +284,6 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             fontLesser.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS,
                     InputEvent.CTRL_MASK));
             fontLesser.addActionListener(new ActionListener() {
-                @SuppressWarnings("hiding")
                 public void actionPerformed(ActionEvent e) {
                     mailBodyChangeFont(1 / 1.2);
                 }
@@ -296,7 +294,6 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             fontNormal.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0,
                     InputEvent.CTRL_MASK));
             fontNormal.addActionListener(new ActionListener() {
-                @SuppressWarnings("hiding")
                 public void actionPerformed(ActionEvent e) {
                     mailBodyChangeFont(0);
                 }
