@@ -2165,7 +2165,9 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 "schemDraftSelectedProfession", SWGProfession.ALL);
 
         List<String> pl = SWGProfession.getNames(false);
-		final JComboBox<String> cb = new JComboBox(pl.toArray());
+        String[] plArr = new String[pl.size()];
+    	plArr = pl.toArray(plArr);
+		final JComboBox<String> cb = new JComboBox<String>(plArr);
         cb.setToolTipText("Filter by profession");
 
         Dimension d = new Dimension(100, 25);
