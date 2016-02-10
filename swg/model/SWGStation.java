@@ -65,8 +65,6 @@ public final class SWGStation implements
 
     /**
      * The name of this station.
-     * <p>
-     * XXX: turn this field final, remove stationPath (r1970, July 16, 2010).
      */
     private final String name;
 
