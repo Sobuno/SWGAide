@@ -68,7 +68,7 @@ public final class SWGStation implements
      * <p>
      * XXX: turn this field final, remove stationPath (r1970, July 16, 2010).
      */
-    private String name;
+    private final String name;
 
     /**
      * A list of notes files. These notes files pertains to this instance but
