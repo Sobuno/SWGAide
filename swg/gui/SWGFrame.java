@@ -634,7 +634,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         long timeToday = System.currentTimeMillis();
         Long formerDate = (Long) getPrefsKeeper().get("prefsKeeperBackupDate");
 
-        // TODO: remove/restore when turns 0.8
+        // TODO: Make this configurable somewhere in the interface
         getPrefsKeeper().add("prefsKeeperBackupRepeatDays", Integer.valueOf(1));
 
         Integer backupRepeatDays = (Integer) getPrefsKeeper().get(
