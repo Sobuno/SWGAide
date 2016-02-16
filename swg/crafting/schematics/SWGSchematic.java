@@ -8,6 +8,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import swg.SWGAide;
+import swg.SWGConstants;
 import swg.crafting.Quality;
 import swg.model.SWGProfession;
 import swg.model.SWGProfessionLevel;
@@ -260,7 +261,7 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
         category = c > 0
                 ? c
                 : Integer.MAX_VALUE;
-        if (category <= 0)
+        if (category == Integer.MAX_VALUE) 
             SWGAide.printDebug("scmc", 1,
                     "SWGSchematic: missing category: " + name);
 
@@ -369,9 +370,11 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
     }
 
     public int compareTo(SWGSchematic other) {
-        if (this.getCategory() == 726 && other.getCategory() == 726) // camps
-            return this.getComponentSlots().size()
-                    - other.getComponentSlots().size();
+    	if(SWGConstants.nge) {
+	        if (this.getCategory() == 726 && other.getCategory() == 726) // In NGE, camps with more components are better
+	            return this.getComponentSlots().size()
+	                    - other.getComponentSlots().size();
+    	}
         return this.name.compareToIgnoreCase(other.name);
     }
 
@@ -387,10 +390,10 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
     }
 
     /**
-     * Returns the category ID which this schematic pertains to, or -1 if it is
+     * Returns the category ID which this schematic pertains to, or Integer.MAX_VALUE if it is
      * unknown. The category is obtained from the schematics manager.
      * 
-     * @return the category ID, -1
+     * @return the category ID, Integer.MAX_VALUE
      */
     public int getCategory() {
         return category;
