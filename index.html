@@ -7,8 +7,21 @@
     <meta name="description" content="SWGAide : Your aide in Star Wars Galaxies, the stellar role playing game">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <title>SWGAide</title>
+    <script type="text/javascript">
+    // From http://stackoverflow.com/a/26454035, modified somewhat
+    $(document).ready(function () {
+        GetLatestReleaseInfo();
+    });
+
+    function GetLatestReleaseInfo() {
+        $.getJSON("https://api.github.com/repos/Sobuno/SWGAide/releases/latest").done(function (release) {
+            var asset = release.assets[0];
+            $("#mainDownloadButton").attr("href", assetExe.browser_download_url);
+        });
+    }
+</script>
   </head>
 
   <body>
@@ -78,6 +91,7 @@ carefully read the read-me file about administrative and security settings.</p><
 <h3>
 <a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>DOWNLOAD:</h3>
 
+<a href="https://github.com/Sobuno/SWGAide/releases" id='mainDownloadButton'>Download SWGAide</a>
 <p>Always retain at least one exe/JAR file as backup.
 Latest release available here: <a href="https://github.com/Sobuno/SWGAide/releases">https://github.com/Sobuno/SWGAide/releases</a></p>
       </section>
