@@ -18,7 +18,7 @@
     function GetLatestReleaseInfo() {
         $.getJSON("https://api.github.com/repos/Sobuno/SWGAide/releases/latest").done(function (release) {
             var asset = release.assets[0];
-            $("#mainDownloadButton").attr("href", assetExe.browser_download_url);
+            $("#mainDownloadButton").attr("href", asset.browser_download_url);
         });
     }
 </script>
