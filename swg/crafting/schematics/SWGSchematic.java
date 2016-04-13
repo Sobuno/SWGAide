@@ -370,11 +370,6 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
     }
 
     public int compareTo(SWGSchematic other) {
-    	if(SWGConstants.nge) {
-	        if (this.getCategory() == 726 && other.getCategory() == 726) // In NGE, camps with more components are better
-	            return this.getComponentSlots().size()
-	                    - other.getComponentSlots().size();
-    	}
         return this.name.compareToIgnoreCase(other.name);
     }
 

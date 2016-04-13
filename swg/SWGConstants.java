@@ -68,14 +68,9 @@ public class SWGConstants {
     public static final String swgVersionTXT = "SWGAide-version.TXT";
 
     /**
-     * The version number of the SWGAide that is available for download.
+     * The version number of SWGAide that is available for download.
      */
     public static final String version = "0.9.8-Sobuno-0.0.11";
-    
-    /**
-     * Indicates whether we are operating in NGE mode or pre-CU mode
-     */
-    public static final boolean nge = false;
 
     /**
      * Returns the cache directory.

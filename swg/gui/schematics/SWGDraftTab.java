@@ -1333,17 +1333,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         for (SWGProfessionLevel p : s.getSkillLevels()) {
             if (p.getName().equals("Error"))
                 z.app(SWGSchematicTab.UNKNOWN);
-            else if (SWGConstants.nge) {
-            	 if	(p.getName().equals("Novice"))
-                     z.app("Novice");
-                 else {
-                     z.app(p.getProfession().getNameShort())
-                             .app("&nbsp;(").app(p.getLevel()).app(')');
-                 }
-            }
-            else {
+            else 
             	z.app(p.getName()).app("&nbsp;(").app(p.getProfession().getNameShort()).app(')');
-            }
             z.app("<br/>");
         }
 
