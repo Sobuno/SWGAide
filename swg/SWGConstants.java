@@ -70,7 +70,7 @@ public class SWGConstants {
     /**
      * The version number of SWGAide that is available for download.
      */
-    public static final String version = "0.9.8-Sobuno-0.0.11";
+    public static final String version = "0.9.8-Sobuno-0.0.12";
 
     /**
      * Returns the cache directory.
