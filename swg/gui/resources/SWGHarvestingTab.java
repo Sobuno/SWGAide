@@ -971,20 +971,23 @@ final class SWGHarvestingTab extends JPanel {
      * @return {@code true} if successful
      */
     private boolean importOwner(String[] split) {
-        // owner,name,hopper,maint,energy,tech,buff
+        // owner,name,reducedMaintenanceFees
         split[1] = importOwnerNormalizeName(split[1]);
         if (SWGResController.harvesterOwnerExists(split[1],
                 SWGResourceTab.galaxy()))
             return true; // discard silently
 
         try {
-            SWGHarvesterOwner u = new SWGHarvesterOwner(
-                    split[1],
-                    ZNumber.intExc(split[2]),
-                    ZNumber.intExc(split[3]),
-                    ZNumber.intExc(split[4]),
-                    ZNumber.intExc(split[5]),
-                    ZNumber.intExc(split[6]));
+        	SWGHarvesterOwner u;
+        	if(split.length > 3) { //XXX: Old format "owner,name,hopper,maint,energy,tech,buff", remove at some point
+        		u = new SWGHarvesterOwner(
+                         split[1],
+                         false);
+        	} else {
+       		 	u = new SWGHarvesterOwner(
+                     split[1],
+                     Boolean.parseBoolean(split[2]));
+        	}
             SWGResController.harvesterOwnerAdd(u, SWGResourceTab.galaxy());
             return true;
         } catch (Exception e) {
@@ -1344,7 +1347,7 @@ final class SWGHarvestingTab extends JPanel {
         };
 
         for (int i = 1; i < ownerModel.getColumnCount(); i++)
-            SWGGuiUtils.tableSetColumnWidths(ownerTable, 1, 99, 35, 0);
+            SWGGuiUtils.tableSetColumnWidths(ownerTable, 1, 99, 150, 0);
 
         ownerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         ownerTable.setAutoCreateRowSorter(true);
@@ -1631,15 +1634,7 @@ final class SWGHarvestingTab extends JPanel {
         String n = o.getName().replace(',', '\u00b8');
         wr.writeExc(n);
         wr.writeExc(",");
-        wr.writeExc(Integer.toString(o.getStorageEfficiency()));
-        wr.writeExc(",");
-        wr.writeExc(Integer.toString(o.getMaintEfficiency()));
-        wr.writeExc(",");
-        wr.writeExc(Integer.toString(o.getEnergyEfficiency()));
-        wr.writeExc(",");
-        wr.writeExc(Integer.toString(o.getHarvestingTechnology()));
-        wr.writeExc(",");
-        wr.writelnExc(Integer.toString(o.getHarvestFair()));
+        wr.writeExc(Boolean.toString(o.hasReducedMaintFees()));
     }
 
     /**
@@ -1657,7 +1652,7 @@ final class SWGHarvestingTab extends JPanel {
          */
         private final String[] colNames =
             { "Owner", "Updated", "Description", "Type", "Maintenance",
-                    "Power", "Resource", "%", "UBER", "AER", "Hopper", "Notes" };
+                    "Power", "Resource", "%", "BER", "AER", "Hopper", "Notes" };
 
         /**
          * An array of column header tool tips for the table of owners.
@@ -1672,8 +1667,8 @@ final class SWGHarvestingTab extends JPanel {
                         "Remains of added units and depletion date",
                         null,
                         "Concentration as read at the survey device",
-                        "User Base Extraction Rate, adjusted for expertise, buff, and 50%",
-                        "Actual Extraction Rate, UBER adjusted for concentration",
+                        "Base Extraction Rate",
+                        "Actual Extraction Rate, BER adjusted for concentration",
                         "Current fullness or amount at hopper, and full date",
                         null };
 
@@ -1793,7 +1788,7 @@ final class SWGHarvestingTab extends JPanel {
             case 7:
                 return Integer.valueOf(harv.getConcentration());
             case 8:
-                return Double.valueOf(harv.ber * harv.getBerModifier());
+                return Double.valueOf(harv.ber);
             case 9:
                 return Double.valueOf(harv.getAER());
             case 10: {
@@ -1903,17 +1898,13 @@ final class SWGHarvestingTab extends JPanel {
          * Table column header titles
          */
         private final String[] colNames =
-            { "Owner name", "Hpr", "Mnt", "Eny", "Tch", "Buff" };
+            { "Owner name", "Reduced Maintenance" };
 
         /**
          * An array of column header tool tips for the table of owners.
          */
         final String[] columnToolTips =
-            { "Owner name", "Harvester Storage Efficiency expertise",
-                    "Harvester Maintenance Efficiency expertise",
-                    "Harvester Energy Efficiency expertise",
-                    "Advanced Harvesting Technology expertise",
-                    "Harvester Fair (Entertainer buff)" };
+            { "Owner name", "Reduced Maintenance Fees" };
 
         @Override
         public Class<?> getColumnClass(int column) {
@@ -1942,15 +1933,7 @@ final class SWGHarvestingTab extends JPanel {
             case 0:
                 return owner.getName();
             case 1:
-                return Integer.valueOf(owner.getStorageEfficiency());
-            case 2:
-                return Integer.valueOf(owner.getMaintEfficiency());
-            case 3:
-                return Integer.valueOf(owner.getEnergyEfficiency());
-            case 4:
-                return Integer.valueOf(owner.getHarvestingTechnology());
-            case 5:
-                return Integer.valueOf(owner.getHarvestFair());
+            	return (owner.hasReducedMaintFees()) ? "Yes" : "No";
             default:
                 return "ERROR";
             }

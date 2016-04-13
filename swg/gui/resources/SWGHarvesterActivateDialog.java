@@ -120,7 +120,15 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
      */
     private JLabel harvBer;
 
- 
+    /**
+     * A label to display current details for the selected harvester.
+     */
+    private JLabel harvBonuses;
+    
+    /**
+     * A label to display current details for the selected harvester.
+     */
+    private JLabel harvOwnerReducedMaint;
 
     /**
      * List of defined harvesters to select from.
@@ -659,11 +667,20 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
 
         east.add(new JLabel(" "));
         east.add(new JLabel("                                         "));
+        
+        east.add(new JLabel("Bonuses: ", SwingConstants.TRAILING));
+        harvBonuses = new JLabel();
+        east.add(harvBonuses);
+
+        east.add(new JLabel("Maintance: ", SwingConstants.TRAILING));
+        harvOwnerReducedMaint = new JLabel();
+        east.add(harvOwnerReducedMaint);
+
 
        
 
 
-        SpringUtilities.makeCompactGrid(east, 3, 2, 0, 0, 0, 0);
+        SpringUtilities.makeCompactGrid(east, 6, 2, 0, 0, 0, 0);
 
         east.addMouseListener(new MouseAdapter() {
 
@@ -799,7 +816,27 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
         harvHopper.setText(currentHarvester == null
                 ? null
                 : ZNumber.asText(currentHarvester.hopperSize, true, true));
-
+        
+        // bonuses
+        if (currentHarvester != null) {
+            harvBonuses.setText(currentHarvester.isActive()
+                    ? "applied"
+                    : currentHarvester.getOwner() != null
+                            ? "applied (stayed put)"
+                            : currentOwner == null
+                                    ? "pending (deed)"
+                                    : "pending - " + currentOwner.getName());
+            // active and getOwner != null >> harv has valid bonus values
+            boolean ownerExists = currentHarvester.getOwner() != null;
+            harvOwnerReducedMaint.setText(ownerExists
+                    ? (currentHarvester.hasReducedMaintFees() ? "Yes" : "No")
+                    : currentOwner == null
+                            ? null
+                            : (currentOwner.hasReducedMaintFees() ? "Yes" : "No"));
+        } else {
+            harvBonuses.setText("(harvester pending)");
+            harvOwnerReducedMaint.setText(null);
+        }
  
     }
 
@@ -920,12 +957,6 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
         currentHarvester.setResource(currentResource);
         currentHarvester.setSelfPowered(selfPowered.isSelected());
         currentHarvester.setPower(ZNumber.longVal(power.getText()));
-
-        int old = currentOwner.getHarvestFair();
-        int hf = 0;
-        currentOwner.setHarvestFair(hf);
-        if (old != hf && ((SWGHarvestingTab) parent).ownerTable != null)
-            ((SWGHarvestingTab) parent).ownerTable.repaint();
 
         if (currentHarvester.isActive()) {
             // allow for structure-transfer without resetting bonuses

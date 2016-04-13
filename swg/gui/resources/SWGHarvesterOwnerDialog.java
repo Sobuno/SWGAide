@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -54,6 +55,11 @@ final class SWGHarvesterOwnerDialog extends SWGJDialog implements ActionListener
      * A drop down for the owner name
      */
     private JComboBox<String> ownerName;
+    
+    /**
+     * A checkbox for Efficiency IV, reduced maintenance fees
+     */
+    private JCheckBox reducedMaintFeeValue;
 
  
     /**
@@ -90,9 +96,9 @@ final class SWGHarvesterOwnerDialog extends SWGJDialog implements ActionListener
         if (src == cancelButton) {
             // pass
         } else if (src == okButton) {
-            int[] smetf;
-            if ((smetf = isDialogOK()) != null)
-                saveOwner(smetf);
+            boolean[] ownerAttributes;
+            if ((ownerAttributes = isDialogOK()) != null)
+                saveOwner(ownerAttributes);
             else
                 return;
         } else {
@@ -140,11 +146,10 @@ final class SWGHarvesterOwnerDialog extends SWGJDialog implements ActionListener
      * is invalid this method raises a GUI message dialog on the matter and
      * returns {@code null}.
      * 
-     * @return an integer array for the parsed integer values storage,
-     *         maintenance, energy, adv-tech, fair, or {@code null} if there is
-     *         an error
+     * @return a boolean array for the parsed boolean value reducedMaint
+     *         , or {@code null} if there is an error
      */
-    private int[] isDialogOK() {
+    private boolean[] isDialogOK() {
         String msg = null;
         String ttl = null;
         String owner = (String) ownerName.getSelectedItem();
@@ -157,10 +162,15 @@ final class SWGHarvesterOwnerDialog extends SWGJDialog implements ActionListener
             msg = "A owner exists with this name";
             ttl = "Owner name conflict";
         }
+        
+        boolean[] ownerAttributes = null;
+	    if (msg == null) {
+        	boolean m = reducedMaintFeeValue.isSelected();
 
+        	ownerAttributes = new boolean[] { m };
+        	return ownerAttributes;
+        }
 
-        if (msg == null)
-            return new int[] { 0, 0, 0, 0, 0 };
 
         JOptionPane.showMessageDialog(ownerName, msg, ttl,
                 JOptionPane.ERROR_MESSAGE);
@@ -210,9 +220,18 @@ final class SWGHarvesterOwnerDialog extends SWGJDialog implements ActionListener
         JLabel lc = new JLabel("Owner name");
         content.add(lc);
         content.add(ownerName);
+        
+        reducedMaintFeeValue = new JCheckBox("");
+        reducedMaintFeeValue.setToolTipText("Select if the owner has "
+        		+ "Efficiency IV of Merchant, which gives 20%"
+        		+ " reducded maintenance fees ");
+
+        JLabel lm = new JLabel("Reduced Maint. Fees");
+        content.add(lm);
+        content.add(reducedMaintFeeValue);
 
 
-        SpringUtilities.makeCompactGrid(content, 1, 2, 0, 0, 5, 3);
+        SpringUtilities.makeCompactGrid(content, 2, 2, 0, 0, 5, 3);
         return content;
     }
 
@@ -221,22 +240,18 @@ final class SWGHarvesterOwnerDialog extends SWGJDialog implements ActionListener
      * that the content at the dialog is valid. This method saves the owner to
      * the list of owners for the current galaxy.
      * 
-     * @param smetf an integer array for the integer values storage,
-     *        maintenance, energy, tech, fair parsed from the GUI
+     * @param ownerAttributes a boolean array for the boolean value
+     *        reducedMaint parsed from the GUI
      */
-    private void saveOwner(int[] smetf) {
+    private void saveOwner(boolean[] ownerAttributes) {
         String n = (String) ownerName.getSelectedItem();
         if (currentOwner == null) { // equals "create owner"
             SWGResController.harvesterOwnerAdd(
                     new SWGHarvesterOwner(
-                            n, smetf[0], smetf[1], smetf[2], smetf[3], smetf[4]),
+                            n, ownerAttributes[0]),
                     SWGResourceTab.galaxy());
         } else {
-            currentOwner.setStorageEfficiency(smetf[0]);
-            currentOwner.setMaintEfficiency(smetf[1]);
-            currentOwner.setEnergyEfficiency(smetf[2]);
-            currentOwner.setHarvestingTechnology(smetf[3]);
-            currentOwner.setHarvestFair(smetf[4]);
+            currentOwner.setReducedMaintFees(ownerAttributes[0]);
         }
         ((SWGHarvestingTab) parent).resetOwners();
     }

@@ -87,42 +87,6 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
     private int concentration;
 
     /**
-     * The number of expertise points in <I>Harvester Energy
-     * Efficiency&nbsp;</I> that applies to this harvester. The value applies
-     * from the date this harvester is put down in the world until it is pulled
-     * up. This value must never be reset as long as this harvester stays put.
-     * <P>
-     * The values is in the range [0 4].
-     * 
-     * @serial int: energyEfficiencyLevel
-     */
-    private int energyEfficiencyLevel;
-
-    /**
-     * The level of the Entertainer buff <I>Harvester Fair&nbsp;</I> that
-     * applies to this harvester. The value applies from the date this harvester
-     * is put down in the world until it is pulled up. This value must never be
-     * reset as long as this harvester stays put.
-     * <P>
-     * The values is in the range [0 5].
-     * 
-     * @serial int: harvestFair
-     */
-    private int harvestFair;
-
-    /**
-     * The number of expertise points in <I>Advanced Harvesting
-     * Technology&nbsp;</I> that applies to this harvester. The value applies
-     * from the date this harvester is put down in the world until it is pulled
-     * up. This value must never be reset as long as this harvester stays put.
-     * <P>
-     * The values is in the range [0 2].
-     * 
-     * @serial int: harvestingTechnologyLevel
-     */
-    private int harvestingTechnologyLevel;
-
-    /**
      * The fixed hopper capacity size for this harvester, in units.
      * 
      * @serial int: hopper size
@@ -165,6 +129,15 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * @serial int: maintenanceEfficiencyLevel
      */
     private int maintenanceEfficiencyLevel;
+    
+    /**
+     * Whether this harvester has been put down by an owner with the skill
+     * <I>Efficiency IV</I>, which gives a 20% reduction in maintenance fees
+     * 
+     * 
+     * @serial boolean: reducedMaintenanceFees
+     */
+    private boolean reducedMaintenanceFees;
 
     /**
      * The fixed base maintenance consumption rate for this harvester, in
@@ -271,18 +244,6 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * @serial int cluster count
      */
     private int several = 1;
-
-    /**
-     * This represents how many points of <I>Harvester Storage
-     * Efficiency&nbsp;</I> that applies to this harvester. The value applies
-     * from the date this harvester is put down in the world until it is pulled
-     * up. This value must never be reset as long as this harvester stays put.
-     * <P>
-     * The values is in the range [0 4].
-     * 
-     * @serial int: storageEfficiencyLevel
-     */
-    private int storageEfficiencyLevel;
 
     /**
      * The type of harvester this object is, for example: Elite Mineral,
@@ -395,11 +356,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
         if (reDeed) {
             owner = null;
             setSelfPowered(false);
-            storageEfficiencyLevel = 0;
-            maintenanceEfficiencyLevel = 0;
-            energyEfficiencyLevel = 0;
-            harvestingTechnologyLevel = 0;
-            harvestFair = 0;
+            reducedMaintenanceFees = false;
         }
     }
 
@@ -418,22 +375,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
     double getAER() {
         // BER * concentration/100 * modifier
         // (concentration is stored in the range [0 100] >> divide by 100)
-        return ber * concentration / 100d * getBerModifier();
-    }
-
-    /**
-     * Returns the modifier for the base extraction rate determined by applied
-     * expertise bonuses and entertainer buff.
-     * 
-     * @return the BER modifier, &ge; 1.5
-     */
-    double getBerModifier() {
-        double techMod = 1.0; // base
-        if (harvestingTechnologyLevel == 1)
-            techMod = 1.2;
-        else if (harvestingTechnologyLevel == 2)
-            techMod = 1.3;
-        return 1.0 * (techMod + (harvestFair * .01));
+        return ber * concentration / 100d;
     }
 
     /**
@@ -447,54 +389,13 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
     }
 
     /**
-     * Returns the current level of the expertise <I>Harvester Energy
-     * Efficiency&nbsp;</I> applied to this harvester, in the range [0 4].
-     * 
-     * @return the level of <I>Harvester Energy Efficiency</I>
-     */
-    int getEnergyEfficiencyLevel() {
-        return energyEfficiencyLevel;
-    }
-
-    /**
-     * Returns the modifier for the power consumption rate, based on
-     * {@link #energyEfficiencyLevel}.
-     * 
-     * @return the power consumption modifier, <= 1.0
-     */
-    private double getEnergyModifier() {
-        return 1.0 - (energyEfficiencyLevel * .05);
-    }
-
-    /**
-     * Returns the level of the Entertainer buff <I>Harvester Fair&nbsp;</I>
-     * that the owner had who put down this harvester in the world. The level
-     * applies until the harvester is pulled up, re-deeded.
-     * 
-     * @return the level of harvest fair
-     */
-    int getHarvestFair() {
-        return harvestFair;
-    }
-
-    /**
-     * Returns the current level of the expertise <I>Advanced Harvesting
-     * Technology&nbsp;</I> applied to this harvester, in the range [0 2].
-     * 
-     * @return the level of <I>Advanced Harvesting Technology</I>
-     */
-    int getHarvestingTechnologyLevel() {
-        return harvestingTechnologyLevel;
-    }
-
-    /**
      * Returns the modified hopper capacity, in units. This is the current
      * capacity with expertise bonus applied.
      * 
      * @return the modified hopper capacity
      */
     int getHopperCapacity() {
-        return (int) (hopperSize * getStorageModifier());
+        return hopperSize;
     }
 
     /**
@@ -572,12 +473,15 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
 
     /**
      * Returns the modifier for the maintenance consumption rate based on
-     * {@link #maintenanceEfficiencyLevel}.
+     * {@link #reducedMaintenanceFees}.
      * 
      * @return the maintenance consumption modifier, <= 1.0
      */
     private double getMaintModifier() {
-        return 1.0 - (maintenanceEfficiencyLevel * .04);
+    	if(reducedMaintenanceFees) {
+    		return 0.8;
+    	}
+        return 1.0;
     }
 
     /**
@@ -665,7 +569,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
         // compute the number of milliseconds until the power runs out
         // power / (powerRate * mod) >>> hours * ms-per-hour >>>
         return lastUpdated
-            + ((long) (3600000 * power / (powerRate * getEnergyModifier())));
+            + ((long) (3600000 * power / powerRate));
     }
 
     /**
@@ -702,26 +606,6 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
     }
 
     /**
-     * Returns the current level of the expertise <I>Harvester Storage
-     * Efficiency&nbsp;</I> applied to this harvester, in the range [0 4].
-     * 
-     * @return the level of <I>Harvester Storage Efficiency</I>
-     */
-    int getStorageEfficiencyLevel() {
-        return storageEfficiencyLevel;
-    }
-
-    /**
-     * Returns the modifier for the maintenance consumption rate based on
-     * {@link #maintenanceEfficiencyLevel}.
-     * 
-     * @return the maintenance consumption modifier, >= 1.0
-     */
-    private double getStorageModifier() {
-        return 1.0 + (storageEfficiencyLevel * .03);
-    }
-
-    /**
      * Returns {@code true} if this harvester is active.
      * 
      * @return {@code true} if this harvester is active
@@ -741,6 +625,16 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
     boolean isSelfPowered() {
         return selfPowered;
     }
+    
+    /**
+     * Determines if this harvester has reduced maintenance fees.
+     * 
+     * @return {@code true} if this harvester has reduced maintenance fees.
+     */
+    boolean hasReducedMaintFees() {
+        return reducedMaintenanceFees;
+    }
+
 
     /**
      * Refreshes this harvester. This method updates the time for the last
@@ -855,11 +749,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
             throw new NullPointerException("Argument is null");
 
         if (!isActive && this.owner == null) {
-            harvestFair = owner.getHarvestFair();
-            storageEfficiencyLevel = owner.getStorageEfficiency();
-            maintenanceEfficiencyLevel = owner.getMaintEfficiency();
-            energyEfficiencyLevel = owner.getEnergyEfficiency();
-            harvestingTechnologyLevel = owner.getHarvestingTechnology();
+            reducedMaintenanceFees = owner.hasReducedMaintFees();
         }
         this.owner = owner;
     }

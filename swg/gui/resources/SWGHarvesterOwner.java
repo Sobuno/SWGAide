@@ -2,7 +2,6 @@ package swg.gui.resources;
 
 import java.io.Serializable;
 
-import swg.SWGConstants;
 import swg.model.SWGCharacter;
 
 /**
@@ -40,41 +39,17 @@ final class SWGHarvesterOwner implements Serializable,
      * {@code null} if this instance if a phony harvester owner.
      */
     private SWGCharacter character;
-
+    
     /**
-     * This represents how many points the owner has spent on the Harvester
-     * Energy Efficiency expertise
+     * This represents whether the owner has Efficiency IV, which gives a 
+     * reduction in maintenance fees of 20%.
      */
-    private int energyEfficiencyLevel;
-
-    /**
-     * This represents the level of <I>Harvester Fair</I>, an Entertainer buff,
-     * the owner has.
-     */
-    private int harvestFair;
-
-    /**
-     * This represents how many points the owner has spent on the Advanced
-     * Harvesting Technology expertise
-     */
-    private int harvestingTechnologyLevel;
-
-    /**
-     * This represents how many points the owner has spent on the Harvester
-     * Maintenance Efficiency expertise
-     */
-    private int maintenanceEfficiencyLevel;
+    private boolean reducedMaintenanceFees; 
 
     /**
      * Name of the character associated with this owner object
      */
     private final String name;
-
-    /**
-     * This represents how many points the owner has spent on the Harvester
-     * Storage Efficiency expertise
-     */
-    private int storageEfficiencyLevel;
 
     /**
      * Creates a phony harvester owner with the given name, expertise modifiers
@@ -88,36 +63,20 @@ final class SWGHarvesterOwner implements Serializable,
      * @param phony
      *            a description/name for a phony owner, later immutable; a valid
      *            string is not {@code null} and longer than 2 characters
-     * @param storage
-     *            the number of expertise points spent in Harvester Storage
-     *            Efficiency, [0 4]
-     * @param maint
-     *            the number of expertise points spent in Harvester Maintenance
-     *            Efficiency, [0 4]
-     * @param energy
-     *            the number of points expertise spent in Harvester Energy
-     *            Efficiency, [0 4]
-     * @param tech
-     *            the number of points expertise spent in Advanced Harvesting
-     *            Technology, [0 2]
-     * @param fair
-     *            the level of the Entertainer buff Harvest Fair, [0 5]
+     * @param reducedMaint
+     *            Whether the owner has Efficiency IV in Merchant, which gives 
+     *            reduced maintenance fees
      * @throws IllegalArgumentException
      *             if there is an argument is invalid
      * @throws NullPointerException
      *             if {@code phony} is {@code null}
      */
-    SWGHarvesterOwner(String phony, int storage, int maint, int energy,
-        int tech, int fair) {
+    SWGHarvesterOwner(String phony, boolean reducedMaint) {
         if (phony.trim().length() < 3)
             throw new IllegalArgumentException("Illegal value: " + phony);
 
         this.name = phony;
-        setStorageEfficiency(storage);
-        setMaintEfficiency(maint);
-        setEnergyEfficiency(energy);
-        setHarvestingTechnology(tech);
-        setHarvestFair(fair);
+        setReducedMaintFees(reducedMaint);
     }
 
     /**
@@ -153,63 +112,14 @@ final class SWGHarvesterOwner implements Serializable,
     private SWGCharacter getCharacter() {
         return character;
     }
-
+    
     /**
-     * Returns the points the owner has spent on the <I>Harvester Energy
-     * Efficiency&nbsp;</I> expertise, zero to four.
+     * Returns whether the owner has the skill Effiency IV
      * 
-     * @return the energyEfficiencyLevel
+     * @return the reducedMaintenanceFees
      */
-    int getEnergyEfficiency() {
-        if(SWGConstants.nge) {
-            if (character != null)
-                return energyEfficiencyLevel; // XXX
-            return energyEfficiencyLevel;
-        }
-        return 0;
-    }
-
-    /**
-     * Returns the level of <I>Harvest Fair&nbsp;</I> for this owner, zero to
-     * five.
-     * 
-     * @return the harvestFair
-     */
-    int getHarvestFair() {
-        if(SWGConstants.nge) {
-            return harvestFair;
-        }
-    	return 0;
-    }
-
-    /**
-     * Returns the points the owner has spent on the <I>Advanced Harvesting
-     * Technology&nbsp;</I> expertise, zero to two.
-     * 
-     * @return the harvestingTechnologyLevel
-     */
-    int getHarvestingTechnology() {
-        if(SWGConstants.nge) {
-            if (character != null)
-                return harvestingTechnologyLevel; // XXX
-            return harvestingTechnologyLevel;
-        }
-    	return 0;
-    }
-
-    /**
-     * Returns the points the owner has spent on the <I>Harvester Maintenance
-     * Efficiency&nbsp;</I> expertise, zero to four.
-     * 
-     * @return the maintenanceEfficiencyLevel
-     */
-    int getMaintEfficiency() {
-        if(SWGConstants.nge) {
-            if (character != null)
-                return maintenanceEfficiencyLevel; // XXX
-            return maintenanceEfficiencyLevel;
-        }
-    	return 0;
+    boolean hasReducedMaintFees() {
+       return reducedMaintenanceFees;
     }
 
     /**
@@ -225,122 +135,18 @@ final class SWGHarvesterOwner implements Serializable,
     }
 
     /**
-     * Returns the points the owner has spent on the <I>Harvester Storage
-     * Efficiency&nbsp;</I> expertise, zero to four.
+     * Sets whether the owner has <I>Efficiency IV</I>
      * 
-     * @return the storageEfficiencyLevel
-     */
-    int getStorageEfficiency() {
-        if(SWGConstants.nge) {
-            if (character != null)
-                return storageEfficiencyLevel; // XXX
-            return storageEfficiencyLevel;
-        }
-        return 0;
-    }
-
-    /**
-     * Sets the number of expertise points spent in <I>Harvester Energy
-     * Efficiency</I>, zero to four points.
-     * 
-     * @param energyEfficiencyLevel
-     *            the level to set, [0 4]
-     * @throws IllegalArgumentException
-     *             if the argument is invalid
-     * @throws IllegalStateException
-     *             if this method is invoked and the character is set and this
-     *             method
+     * @param reducedMaintenanceFees
+     *            true if owner has Efficiency IV, false otherwise
      * @throws IllegalStateException
      *             if this method is invoked and the character is set and this
      *             method
      */
-    void setEnergyEfficiency(int energyEfficiencyLevel) {
+    void setReducedMaintFees(boolean reducedMaintenanceFees) {
         if (character != null)
             throw new IllegalStateException("Unsupported when character is set");
-        if (energyEfficiencyLevel < 0 || energyEfficiencyLevel > 4)
-            throw new IllegalArgumentException("Illegal value: "
-                + energyEfficiencyLevel);
-        this.energyEfficiencyLevel = energyEfficiencyLevel;
-    }
-
-    /**
-     * Sets the level of <I>Harvester Fair</I>, an Entertainer buff, zero to
-     * five packages. This method is supported also when {@link #character} is
-     * set
-     * 
-     * @param harvestFair
-     *            the level to set, [0 5]
-     * @throws IllegalArgumentException
-     *             if the argument is invalid
-     */
-    void setHarvestFair(int harvestFair) {
-        if (harvestFair < 0 || harvestFair > 5)
-            throw new IllegalArgumentException("Illegal value: " + harvestFair);
-        this.harvestFair = harvestFair;
-    }
-
-    /**
-     * Sets the number of expertise points spent in <I>Advanced Harvesting
-     * Technology</I>, zero to two points.
-     * 
-     * @param harvestingTechnologyLevel
-     *            the level to set, [0 2]
-     * @throws IllegalArgumentException
-     *             if the argument is invalid
-     * @throws IllegalStateException
-     *             if this method is invoked and the character is set and this
-     *             method
-     */
-    void setHarvestingTechnology(int harvestingTechnologyLevel) {
-        if (character != null)
-            throw new IllegalStateException("Unsupported when character is set");
-        if (harvestingTechnologyLevel < 0 || harvestingTechnologyLevel > 2)
-            throw new IllegalArgumentException("Illegal value: "
-                + harvestingTechnologyLevel);
-        this.harvestingTechnologyLevel = harvestingTechnologyLevel;
-    }
-
-    /**
-     * Sets the number of expertise points spent in <I>Harvester Maintenance
-     * Efficiency</I>, zero to four points.
-     * 
-     * @param maintenanceEfficiencyLevel
-     *            the level to set, [0 4]
-     * @throws IllegalArgumentException
-     *             if the argument is invalid
-     * @throws IllegalStateException
-     *             if this method is invoked and the character is set and this
-     *             method
-     */
-    void setMaintEfficiency(int maintenanceEfficiencyLevel) {
-        if (character != null)
-            throw new IllegalStateException("Unsupported when character is set");
-        if (maintenanceEfficiencyLevel < 0 || maintenanceEfficiencyLevel > 4)
-            throw new IllegalArgumentException("Illegal value: "
-                + maintenanceEfficiencyLevel);
-        this.maintenanceEfficiencyLevel = maintenanceEfficiencyLevel;
-    }
-
-    /**
-     * Sets the number of expertise points spent in <I>Harvester Storage
-     * Efficiency</I>, zero to four points.
-     * 
-     * @param storageEfficiencyLevel
-     *            the level to set, [0 4]
-     * @throws IllegalArgumentException
-     *             if the argument is invalid
-     * @throws IllegalStateException
-     *             if this method is invoked and the character is set and this
-     *             method
-     */
-    void setStorageEfficiency(int storageEfficiencyLevel) {
-        if (character != null)
-            throw new IllegalStateException("Unsupported when character is set");
-        if (storageEfficiencyLevel < 0 || storageEfficiencyLevel > 4)
-            throw new IllegalArgumentException("Illegal value: "
-                + storageEfficiencyLevel);
-
-        this.storageEfficiencyLevel = storageEfficiencyLevel;
+        this.reducedMaintenanceFees = reducedMaintenanceFees;
     }
 
     @Override
