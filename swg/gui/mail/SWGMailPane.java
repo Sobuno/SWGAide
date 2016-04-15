@@ -1406,16 +1406,17 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             row = mailList.convertRowIndexToModel(row);
 
             msg = messages.get(row);
-            mailHeader.from.setText(getFromString(msg.fromLine()));
             mailHeader.date.setText(getDateString(msg.date()));
             mailHeader.filename.setText(msg.getName());
             
             boolean stripColor = ((Boolean) SWGFrame.getPrefsKeeper().get(
                     "mailStripColor", Boolean.FALSE)).booleanValue();
             if(stripColor) {
+                mailHeader.from.setText(SWGGuiUtils.stripColorCodes(getFromString(msg.fromLine())));
                 mailHeader.subject.setText(SWGGuiUtils.stripColorCodes(msg.subject()));
                 mailBody.setText(SWGGuiUtils.stripColorCodes(msg.bodyText()));
             } else {
+                mailHeader.from.setText(getFromString(msg.fromLine()));
                 mailHeader.subject.setText(msg.subject());
                 mailBody.setText(msg.bodyText());
             }
@@ -1862,15 +1863,18 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
         public Object getValueAt(int row, int column) {
             if (messages == null) return "";
             SWGMailMessage msg = messages.get(row);
+            boolean stripColor = ((Boolean) SWGFrame.getPrefsKeeper().get(
+                        "mailStripColor", Boolean.FALSE)).booleanValue();
             switch (column) {
             case 0:
-                boolean stripColor = ((Boolean) SWGFrame.getPrefsKeeper().get(
-                        "mailStripColor", Boolean.FALSE)).booleanValue();
                 if(stripColor) {
                     return SWGGuiUtils.stripColorCodes(msg.subject());
                 }
                 return msg.subject();
             case 1:
+                if(stripColor) {
+                    return SWGGuiUtils.stripColorCodes(getFromString(msg.fromLine()));
+                }
                 return getFromString(msg.fromLine());
             case 2:
                 return msg.date()*1000;
