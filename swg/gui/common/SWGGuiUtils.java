@@ -518,7 +518,7 @@ public final class SWGGuiUtils {
         /**
          * Regular expression that matches color-tags
          */
-        Pattern colorRegexp = Pattern.compile("\\\\(#[a-zA-z0-9]{6})");
+        Pattern colorRegexp = Pattern.compile("\\\\(#[a-zA-z0-9]{6})\\\\?");
         
         return colorRegexp.matcher(input).replaceAll("");
     }
