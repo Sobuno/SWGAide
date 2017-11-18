@@ -306,13 +306,13 @@ public final class SWGMailBox implements Serializable {
                             mail = newMail(tgt, owner);
 
                             if (mail.type() == Type.Auction)
-                                folderAuction.addInternal(mail);
+                                folderAuction.add(mail);
                             else if (mail.type() == Type.ISDroid)
-                                folderISDroid.addInternal(mail);
+                                folderISDroid.add(mail);
                             else if (mail.fromLine().equalsIgnoreCase(boxOwner))
-                                folderSent.addInternal(mail); // is CC to self
+                                folderSent.add(mail); // is CC to self
                             else
-                                folderInbox.addInternal(mail);
+                                folderInbox.add(mail);
 
                             allMails.put(fn, mail);
                         } catch (SecurityException e) {
@@ -391,7 +391,7 @@ public final class SWGMailBox implements Serializable {
                 if (m.getType() != Type.ISDroid) {
                     m.type(Type.Trash);
                     folderISDroid.remove(i);
-                    folderTrash.addInternal(m);
+                    folderTrash.add(m);
                 }
             }
         }
@@ -418,19 +418,19 @@ public final class SWGMailBox implements Serializable {
                             && contains(mail.getName()) != null) continue;
 
                     if (mail.type() == Type.Auction)
-                        folderAuction.addInternal(mail);
+                        folderAuction.add(mail);
                     else if (mail.type() == Type.ISDroid)
-                        folderISDroid.addInternal(mail);
+                        folderISDroid.add(mail);
 
                     // some old suffixes, if any
                     else if (mail.type() == Type.Trash
                             || fn.endsWith(SWGMailMessage.Type.Trash.suffix))
-                        folderTrash.addInternal(mail);
+                        folderTrash.add(mail);
                     else if (mail.type() == Type.Sent
                             || fn.endsWith(SWGMailMessage.Type.Sent.suffix))
-                        folderSent.addInternal(mail);
+                        folderSent.add(mail);
                     else
-                        folderInbox.addInternal(mail);
+                        folderInbox.add(mail);
 
                     allMails.put(mail.getName(), mail);
                 } catch (Exception e) {
